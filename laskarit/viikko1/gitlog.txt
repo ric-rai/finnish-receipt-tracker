@@ -1,0 +1,113 @@
+commit d6e54060c45c926c3c9605ff8cadd5a1e8bc6dfe
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:22:58 2019 +0200
+
+    Poista ja nimeä
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 1d76b546d845d3a3e0bd655c4979e642b54392ef
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:18:48 2019 +0200
+
+    Lisää tiedostot
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit d7242c11573d59a5aec01a29ae2aace5d4b9328c
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:13:50 2019 +0200
+
+    muuta eka ja kolmas
+
+ eka.txt    |  6 ------
+ kolmas.txt | 10 ++++++++++
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+
+commit 315098bd978554bfb6e919207837c0316c70c3de
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:11:41 2019 +0200
+
+    nimeä ekaksi
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 8ce8db728a34a2b58511a56604b860ef3f3aacd8
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:08:57 2019 +0200
+
+    poista toinen
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 5fd59423b64e70a389708d78cc06354bf8360773
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:06:00 2019 +0200
+
+    muokkaa tekstiä
+
+ tiedosto.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit aa1e7f550ceaa7ff46a8a69cf214cdd6582071e8
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:04:21 2019 +0200
+
+    lisää teksti
+
+ tiedosto.txt | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+commit e9669ab55963d5ac347021654b6b141ee18ff88f
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:01:42 2019 +0200
+
+    lisää stuff
+
+ stuff/jokin.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit d255fae42cfb3aff13fc9acd7614d414ba3e338c
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 17:00:21 2019 +0200
+
+    muuta kolmas ja toinen
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit e72805d149e280aa479d11807af1a189f708aa80
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 16:58:58 2019 +0200
+
+    lisää kolmas
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 0c37fc10671579db223625e91f702b92d3196c80
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 16:57:34 2019 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 37b72fe83a89de4c355eb02a2f96265c8cfa929d
+Author: ric-rai <48387692+Ric-Rai@users.noreply.github.com>
+Date:   Thu Mar 14 16:55:56 2019 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
