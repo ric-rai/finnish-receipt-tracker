@@ -16,8 +16,8 @@ Sovelluksessa on aluksi vain yksi näkymä, joka on jaettu kolmeen osaan.
 
 <img src="./kuvat/UI-luonnos.png" width="750">
 
-Oikeanpuoleisessa kuittitaulukossa on lista kaikista järjestelmään syötetyistä kuiteista.
-Keskellä näkyy kuittitaulukosta kulloinkin valitun kuitin tiedot. Vasemmalla on kuva kuitista. 
+Vasemmanpuoleisessa kuittitaulukossa on lista kaikista järjestelmään syötetyistä kuiteista.
+Keskellä näkyy kuittitaulukosta kulloinkin valitun kuitin tiedot. Oikealla on kuva kuitista. 
 
 
 ## Perusversion tarjoama toiminnallisuus
