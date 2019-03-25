@@ -26,7 +26,7 @@ Keskellä näkyy kuittitaulukosta kulloinkin valitun kuitin tiedot. Oikealla on 
 
   - kuitista tallennetaan ostajan nimi, ostopaikan nimi, päivämäärä, ostokset riveittäin sekä yhteissumma
   
-  - yksi ostosrivi koostuu vähintään yhdestä ostostyypistä (esim. "parturi"), kappalemäärästä ja yksikköhinnasta
+  - yksi ostosrivi koostuu vähintään yhdestä ostostyypistä (esim. "parturi"), määrästä ja yksikköhinnasta
   
 - käyttäjä voi tarkastella kaikkia järjestelmään lisättyjä kuitteja  
   
@@ -49,14 +49,14 @@ Järjestelmää täydennetään mahdollisuuksien mukaan esim. seuraavilla toimin
 
 - avusteinen kuittien lisäys tekstintunnistusta hyödyntämällä
 
-  - kuitin kuva voidaan lähettää esim. Google Cloud Visionille, jonka antamien tietojen perusteella pyritään esitäyttämään kuitin tiedot
+  - kuitin kuva voidaan lähettää esim. Google Cloud Visionille, jonka antamien tietojen perusteella pyritään esitäyttämään kuitin perustiedot, sekä antamaan ostosriveille tyypiehdotuksia
   
-  - ostostyypit voidaan esitäyttää ostopaikan nimen perusteella (esim. jos nimessä esiintyy sana "apteekki" niin esitäytetään päätyypit lääkkeiksi)
+  - ostostyypeistä voidaan antaa ehdotuksia ostopaikan nimen perusteella (esim. jos ostopaikan nimessä esiintyy sana "apteekki" niin ehdotetaan kaikkien rivien ostotyypiksi "lääke")
   
-  - ostostyypit voidaan esitäyttää käyttäjän aiemmin samaan kuittirivin nimikkeeseen liittämästä ostostyypistä (kuittirivin nimike on siis ostopaikan käyttämä nimitys tuotteesta, esim. "Belbake puolikarkea vehnj.")
+  - jos käyttäjä on aiemmin hyväksynyt jonkin tyypin samalle nimikkeelle, niin ehdotetaan ensisijassa samaa tyyppiä uudestaan (kuittirivin nimike on siis ostopaikan käyttämä nimitys tuotteesta, esim. "Belbake puolikarkea vehnj.")
   
-  - ostostyypit voidaan esitäyttää sanalistoja hyödyntämällä (esim. Finelin järjestelmästä lista elintarvikkeiden nimistä)
+  - ehdotuksia voidaan antaa sanalistoja hyödyntämällä (esim. Finelin järjestelmästä lista elintarvikkeiden nimistä)
   
-  - ostostyypit voidaan esitäyttää pyytämällä Cloud Visionilta nimikkeen tunnistamista kuvahakuun perustuen
+  - ehdotuksia voidaan antaa pyytämällä Cloud Visionilta nimikkeen tunnistamista kuvahakuun perustuen
   
 - käyttäjä voi luoda erilaisia raportteja ostoksista 
