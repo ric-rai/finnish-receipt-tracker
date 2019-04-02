@@ -1,22 +1,36 @@
 # Kuittiseuranta
 
-## Tehtävät
-
-### Viikko 1
-
-[gitlog.txt](https://github.com/ric-rai/finnish-receipt-tracker/blob/master/laskarit/viikko1/gitlog.txt)
-
-[komentorivi.txt](https://github.com/ric-rai/finnish-receipt-tracker/blob/master/laskarit/viikko1/komentorivi.txt)
-
-### Viikko 2
-
-Tehtävien NetBeans-osuudet tehtiin IntelliJ IDEA:lla.
-
-[Kuvakaappaus](./laskarit/viikko2/Screenshot.png)
-
+Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitämään niistä kirjaa.
 
 ## Dokumentaatio
 
 [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 
 [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
+
+## Komentorivitoiminnot
+
+## Suorittaminen
+
+Sovellus suoritetaan komennolla
+
+```
+mvn compile exec:java -Dexec.mainClass=org.openfx.MainApp
+```
+
+### Testaus
+
+
+Testit suoritetaan komennolla
+
+```
+mvn test
+```
+
+Testikattavuusraportti luodaan komennolla
+
+```
+mvn test jacoco:report
+```
+
+Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
