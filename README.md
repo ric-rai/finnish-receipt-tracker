@@ -10,7 +10,7 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 ## Komentorivitoiminnot
 
-## Suorittaminen
+### Suorittaminen
 
 Sovellus suoritetaan komennolla
 
