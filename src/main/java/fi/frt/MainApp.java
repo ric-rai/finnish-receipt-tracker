@@ -1,5 +1,6 @@
-package org.openjfx;
+package fi.frt;
 
+import fi.frt.ui.FXMLController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

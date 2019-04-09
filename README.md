@@ -6,6 +6,8 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 
+[Arkkitehtuurikuvaus](./dokumentaatio/arkkitehtuuri.md)
+
 [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 
 ## Komentorivitoiminnot
@@ -15,7 +17,7 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 Sovellus suoritetaan komennolla
 
 ```
-mvn compile exec:java -Dexec.mainClass=org.openfx.MainApp
+mvn compile exec:java -Dexec.mainClass=fi.frt.MainApp
 ```
 
 ### Testaus

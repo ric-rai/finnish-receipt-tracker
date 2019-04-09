@@ -1,7 +1,8 @@
-package org.openjfx;
+package fi.frt.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import fi.frt.domain.Receipt;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -24,18 +25,27 @@ public class ReceiptDao implements Dao<Receipt, Long> {
     }
 
     @Override
-    public void create(Receipt r) {
-        //noinspection unchecked
-        Map<String, ?> map = oMapper.convertValue(r, Map.class);
+    public void create(Receipt receipt) {
+        Map map = oMapper.convertValue(receipt, Map.class);
         map.remove("purchases");
         sji.execute(map);
     }
 
     @Override
-    public List<Receipt> list(){
+    public Receipt read(Long key) {
+        return jdbcTemplate.query(
+                "SELECT * FROM Receipt WHERE id = ?",
+                new BeanPropertyRowMapper<>(Receipt.class),
+                key
+        ).get(0);
+    }
+
+    @Override
+    public List<Receipt> list() {
         return jdbcTemplate.query(
                 "SELECT * FROM Receipt ORDER BY date",
-                new BeanPropertyRowMapper<>(Receipt.class));
+                new BeanPropertyRowMapper<>(Receipt.class)
+        );
     }
 
 }

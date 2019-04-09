@@ -7,4 +7,6 @@
 | 24.3. | 1    | IDE:n ja versionhallinnan säätämistä, Maven |
 | 27.3. | 2    | Spring boot -kehykseen tutustumista |
 | 01.4. | 3    | Tietokannan lisääminen |
-| 02.4. | 4    | Testikirjastojen ja DAO-rajapinnan lisääminen. Ensimmäinen toiminnallisuus, eli sovellus tallentaa kuitin perustiedot tietokantaan tallenna-painikkeella. Päivämäärän validointi. Olioiden muuntaminen Jackson-kirjastolla. |
+| 02.4. | 4    | Testikirjastojen ja DAO-rajapinnan lisääminen. Sovellus tallentaa kuitin perustiedot tietokantaan tallenna-painikkeella. Päivämäärän validointi. Olioiden muuntaminen Jackson-kirjastolla. |
+| 09.4. | 5    | Kuittien lukeminen tietokannasta taulukkoon ohjelman käynnistyessä. Kuitin lisääminen tietokantaan näkyy kuittitaulukossa. |
+| Yht   | 21   | 
