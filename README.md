@@ -12,13 +12,21 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 ## Komentorivitoiminnot
 
-### Suorittaminen
+## Suorittaminen
 
 Sovellus suoritetaan komennolla
 
 ```
 mvn compile exec:java -Dexec.mainClass=fi.frt.MainApp
 ```
+
+Jar-tiedosto generoidaan komennolla
+
+```
+mvn package
+```
+
+Jar-tiedosto löytyy _shade_ kansiosta
 
 ### Testaus
 
@@ -36,3 +44,11 @@ mvn test jacoco:report
 ```
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
+
+
+Checkstyle-tarkistus tehdään komennolla
+
+```
+mvn jxr:jxr checkstyle:checkstyle
+```
+

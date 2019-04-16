@@ -6,3 +6,11 @@
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
+
+.invalid{
+    -fx-background-color: red;
+}
+
+.label-like {
+    -fx-background-color: #f4f4f4;
+}
