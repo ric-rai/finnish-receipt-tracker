@@ -9,4 +9,5 @@
 | 01.4. | 3    | Tietokannan lisääminen |
 | 02.4. | 4    | Testikirjastojen ja DAO-rajapinnan lisääminen. Sovellus tallentaa kuitin perustiedot tietokantaan tallenna-painikkeella. Päivämäärän validointi. Olioiden muuntaminen Jackson-kirjastolla. |
 | 09.4. | 5    | Kuittien lukeminen tietokannasta taulukkoon ohjelman käynnistyessä. Kuitin lisääminen tietokantaan näkyy kuittitaulukossa. |
-| Yht   | 21   | 
+| 16.4. | 7    | Lisää toiminnallisuuksia 
+| Yht   | 28   | 
