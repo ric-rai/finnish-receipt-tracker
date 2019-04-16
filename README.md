@@ -10,6 +10,10 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 
+## Releases
+
+[Viikko 5](https://github.com/ric-rai/finnish-receipt-tracker/releases/tag/viikko5)
+
 ## Komentorivitoiminnot
 
 ## Suorittaminen
