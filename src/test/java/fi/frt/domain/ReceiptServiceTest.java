@@ -1,6 +1,7 @@
 package fi.frt.domain;
 
 import fi.frt.dao.Dao;
+import fi.frt.domain.input.ReceiptInputData;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -15,17 +16,16 @@ import static org.junit.Assert.assertThat;
 
 public class ReceiptServiceTest {
     private FakeReceiptDao fakeReceiptDao = new FakeReceiptDao();
-    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao);
+    private List<Receipt> receiptList = new ArrayList<>();
+    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao, receiptList);
     private LocalDate testDate = LocalDate.parse("01.02.2019", DATE_FORMATTER);
     private BigDecimal testSum = new BigDecimal("1.25");
     private ReceiptInputData fakeRID;
 
     @Test
     public void newReceiptWorksCorrectly() {
-        List<Receipt> receiptList = new ArrayList<>();
-        receiptService.setReceiptList(receiptList);
         fakeRID = new FakeReceiptInputData(true, testDate, "Place", testSum, "Buyer");
-        receiptService.newReceipt(fakeRID);
+        receiptService.newReceipt(fakeRID, null);
         Receipt daoReceipt = fakeReceiptDao.getReceipt();
         assertThat(daoReceipt.getDate(), is(testDate));
         assertThat(daoReceipt.getPlace(), is("Place"));
@@ -38,7 +38,7 @@ public class ReceiptServiceTest {
     public void updateReceiptWorksCorrectly(){
         fakeRID = new FakeReceiptInputData(true, testDate, "Place", testSum, "Buyer");
         Receipt receipt = new Receipt();
-        receiptService.updateReceipt(receipt, fakeRID);
+        receiptService.updateReceipt(receipt, fakeRID, null);
         Receipt daoReceipt = fakeReceiptDao.getReceipt();
         assertThat(receipt.getDate(), is(testDate));
         assertThat(receipt.getPlace(), is("Place"));
@@ -71,7 +71,7 @@ public class ReceiptServiceTest {
 
         @Override
         public List<Receipt> list() {
-            return null;
+            return new ArrayList<>();
         }
 
         public Receipt getReceipt() {

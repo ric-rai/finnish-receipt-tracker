@@ -17,9 +17,6 @@ public class Purchase {
     private final SimpleObjectProperty<BigDecimal> price = new SimpleObjectProperty<>();
     private final SimpleStringProperty type = new SimpleStringProperty();
 
-    public Purchase() {
-    }
-
     public long getId() {
         return id.get();
     }
@@ -40,7 +37,7 @@ public class Purchase {
         return type.get();
     }
 
-    public Map<String, Object> getAttributeMap() {
+    public Map<String, Object> getAttrMap() {
         return toMap(
                 "id", id.get(),
                 "name", name.get(),
@@ -69,4 +66,5 @@ public class Purchase {
     public void setType(String type) {
         this.type.set(type);
     }
+
 }

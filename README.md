@@ -10,9 +10,14 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 
+[Käyttöohje](./dokumentaatio/käyttöohje.md)
+
 ## Komentorivitoiminnot
 
 ## Suorittaminen
+
+Tämä sovellus on JavaFX 11 -sovellus, joten JDK 11 tai 12 on oltava asennettuna. 
+Lisää tietoa JavaFX 11- ja 12 -sovelluksista: https://openjfx.io/openjfx-docs/
 
 Sovellus suoritetaan komennolla
 
@@ -26,7 +31,10 @@ Jar-tiedosto generoidaan komennolla
 mvn package
 ```
 
-Jar-tiedosto löytyy _shade_ kansiosta
+Jar-tiedosto löytyy _shade_ kansiosta. 
+Pom.xml -tiedostosta voit muuttaa jar-tiedoston luomisessa käytettäviä asetuksia, 
+kuten tallennuskansiota ja alustayhteensopivuuutta. Jar-tiedoston käynnistysluokaksi on
+määritelty Launcher -luokka, mikä on vaatimus moduulittomalle ohjelmalle JavaFX 11 -versiossa.
 
 ### Testaus
 

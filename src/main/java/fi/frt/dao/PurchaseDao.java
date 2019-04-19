@@ -19,7 +19,7 @@ public class PurchaseDao implements Dao<Purchase, Long> {
 
     @Override
     public Long create(Purchase p) {
-        return sji.usingGeneratedKeyColumns("id").executeAndReturnKey(p.getAttributeMap()).longValue();
+        return sji.usingGeneratedKeyColumns("id").executeAndReturnKey(p.getAttrMap()).longValue();
     }
 
     @Override

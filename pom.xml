@@ -21,7 +21,7 @@
     </parent>
 
     <organization>
-        <name>Your Organisation</name>
+        <name>FRT</name>
     </organization>
 
     <dependencies>
@@ -35,6 +35,25 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.2</version>
         </dependency>
+        <!-- For cross-platform fat jar -->
+        <!--<dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+            <classifier>linux</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+            <classifier>mac</classifier>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -131,7 +150,10 @@
                 <configuration>
                     <excludes>
                         <exclude>**/ui/*</exclude>
+                        <exclude>**/ui/*/*</exclude>
                         <exclude>**/MainApp.*</exclude>
+                        <exclude>**/Launcher.*</exclude>
+                        <exclude>**/utilities/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

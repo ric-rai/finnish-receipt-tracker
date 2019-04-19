@@ -9,11 +9,12 @@ import java.util.Map;
 
 public class PurchaseService {
     private Dao<Purchase, Long> purchaseDao;
-    private List<Purchase> purchaseList = new ArrayList<>();
+    private List<Purchase> activePurchasesList;
     private Map<Long, ArrayList<Purchase>> allPurchases = new HashMap<>();
 
-    public PurchaseService(Dao<Purchase, Long> purchaseDao) {
+    public PurchaseService(Dao<Purchase, Long> purchaseDao, List<Purchase> activePurchasesList) {
         this.purchaseDao = purchaseDao;
+        this.activePurchasesList = activePurchasesList;
         loadAllPurchases();
     }
 
@@ -25,12 +26,8 @@ public class PurchaseService {
         });
     }
 
-    public void setPurchaseList(List<Purchase> purchaseList) {
-        this.purchaseList = purchaseList;
-    }
-
-    public void setPurchases(Long receiptId) {
-        purchaseList.clear();
-        purchaseList.addAll(allPurchases.getOrDefault(receiptId, new ArrayList<>()));
+    public void setActivePurchases(Long receiptId) {
+        activePurchasesList.clear();
+        activePurchasesList.addAll(allPurchases.getOrDefault(receiptId, new ArrayList<>()));
     }
 }

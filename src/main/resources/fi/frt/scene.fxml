@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
 <BorderPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.frt.ui.FXMLController">
    <top>
        <MenuBar BorderPane.alignment="CENTER">
@@ -38,10 +25,10 @@
        <ScrollPane prefHeight="691.0" prefWidth="330.0" BorderPane.alignment="CENTER">
            <TableView fx:id="receiptTable" prefHeight="689.0" prefWidth="327.0">
                <columns>
-                   <TableColumn prefWidth="100.0" text="Päivämäärä" />
-                   <TableColumn prefWidth="99.0" text="Ostopaikka" />
-                   <TableColumn prefWidth="54.0" text="Yhteensä" />
-                   <TableColumn prefWidth="72.0" text="Ostaja" />
+                   <TableColumn fx:id="r_date" prefWidth="100.0" text="Päivämäärä" />
+                   <TableColumn id="r_place" prefWidth="99.0" text="Ostopaikka" />
+                   <TableColumn id="r_sum" prefWidth="54.0" text="Yhteensä" />
+                   <TableColumn id="r_buyer" prefWidth="72.0" text="Ostaja" />
                </columns>
            </TableView>
        </ScrollPane>
@@ -79,12 +66,17 @@
                <TextField fx:id="place" GridPane.columnIndex="1" />
                <TextField fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
            </GridPane>
-           <TableView fx:id="purchaseTable" prefHeight="304.0" prefWidth="575.0">
+           <TableView fx:id="purchaseInputTable" prefHeight="304.0" prefWidth="575.0">
+               <String fx:id="textForNewPurchaseRow" fx:value="Lisää uusi..."/>
+               <String fx:id="p_nameD" fx:value="Ostos"/>
+               <String fx:id="p_quantityD" fx:value="0"/>
+               <String fx:id="p_priceD" fx:value="0.0"/>
+               <String fx:id="p_typeD" fx:value="Ostos"/>
                <columns>
-                   <TableColumn prefWidth="96.0" text="Nimike" />
-                   <TableColumn prefWidth="61.0" text="Määrä" />
-                   <TableColumn prefWidth="75.0" text="Hinta" />
-                   <TableColumn prefWidth="104.0" text="Tyyppi" />
+                   <TableColumn fx:id="p_name" prefWidth="96.0" text="Nimike" />
+                   <TableColumn fx:id="p_quantity" prefWidth="61.0" text="Määrä" />
+                   <TableColumn fx:id="p_price" prefWidth="75.0" text="Hinta" />
+                   <TableColumn fx:id="p_type" prefWidth="104.0" text="Tyyppi" />
                    <!--<TableColumn prefWidth="238.0" text="Ehdotukset" />-->
                </columns>
               <VBox.margin>

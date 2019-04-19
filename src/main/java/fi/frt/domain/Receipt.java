@@ -1,9 +1,5 @@
 package fi.frt.domain;
 
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,16 +9,72 @@ import static fi.frt.utilities.MappingUtils.toMap;
 
 
 public class Receipt {
-    private final SimpleLongProperty id = new SimpleLongProperty();
+    private long id;
+    private LocalDate date;
+    private String place;
+    private BigDecimal sum;
+    private String buyer;
+
+/*    private final SimpleLongProperty id = new SimpleLongProperty();
     private final SimpleObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
     private final SimpleStringProperty place = new SimpleStringProperty();
     private final SimpleObjectProperty<BigDecimal> sum = new SimpleObjectProperty<>();
-    private final SimpleStringProperty buyer = new SimpleStringProperty();
+    private final SimpleStringProperty buyer = new SimpleStringProperty();*/
     private ArrayList<Purchase> purchases;
 
     public Receipt() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public BigDecimal getSum() {
+        return sum;
+    }
+
+    public void setSum(BigDecimal sum) {
+        this.sum = sum;
+    }
+
+    public String getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
+    }
+
+    public Map<String, Object> getAttributeMap() {
+        return toMap(
+                "date", date,
+                "place", place,
+                "sum", sum,
+                "buyer", buyer
+        );
+    }
+
+    /*
     public Long getId() {
         return id.get();
     }
@@ -43,27 +95,11 @@ public class Receipt {
         return buyer.get();
     }
 
-    public SimpleObjectProperty<LocalDate> dateProperty() {
-        return date;
-    }
-
-    public SimpleStringProperty placeProperty() {
-        return place;
-    }
-
-    public SimpleObjectProperty<BigDecimal> sumProperty() {
-        return sum;
-    }
-
-    public SimpleStringProperty buyerProperty() {
-        return buyer;
-    }
-
     public ArrayList<Purchase> getPurchases() {
         return purchases;
     }
 
-    public Map<String, Object> getAttributeMap() {
+    public Map<String, Object> getAttrMap() {
         return toMap(
                 "date", date.get(),
                 "place", place.get(),
@@ -91,6 +127,7 @@ public class Receipt {
     public void setBuyer(String buyer) {
         this.buyer.set(buyer);
     }
+*/
 
     public void setPurchases(ArrayList<Purchase> purchases) {
         this.purchases = purchases;

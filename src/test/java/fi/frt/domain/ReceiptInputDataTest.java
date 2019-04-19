@@ -1,5 +1,6 @@
 package fi.frt.domain;
 
+import fi.frt.domain.input.ReceiptInputData;
 import org.junit.Test;
 
 import java.math.BigDecimal;

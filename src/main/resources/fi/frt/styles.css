@@ -2,15 +2,49 @@
     -fx-font-weight: bold;
 }
 
-.receipt-content Label{
+.receipt-content Label {
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
 
-.invalid{
-    -fx-background-color: red;
+.invalid {
+    -fx-background-color: #ff9999;
 }
 
 .label-like {
     -fx-background-color: #f4f4f4;
+}
+
+#purchaseInputTable .table-row-cell:filled:selected {
+    -fx-cursor: hand;
+    -fx-background: -fx-control-inner-background;
+    -fx-background-color: #cdcdcd;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-table-cell-border-color: derive(-fx-color, 5%);
+}
+
+/*noinspection CssInvalidPseudoSelector*/
+.table-row-cell:last-row {
+    -fx-font-style: italic;
+    -fx-cursor: hand;
+    -fx-text-background-color: #b4b4b4;
+}
+
+.table-view {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0, 0, 0, 0;
+}
+
+#purchaseInputTable .text-field {
+    -fx-background-color: transparent;
+    -fx-padding: 0, 0, 0, 0;
+}
+
+#purchaseInputTable .text-field:focused {
+    -fx-background-color: white;
+    -fx-background-insets: none;
+    -fx-background-radius: none;
+    -fx-prompt-text-fill: transparent;
+    -fx-padding: 0, 0, 0, 0;
 }
