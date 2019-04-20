@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import java.util.List;
+import java.util.Map;
 
 public class ReceiptDao implements Dao<Receipt, Long> {
 
@@ -14,12 +15,12 @@ public class ReceiptDao implements Dao<Receipt, Long> {
 
     public ReceiptDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.sji = new SimpleJdbcInsert(jdbcTemplate).withTableName("Receipt");
+        this.sji = new SimpleJdbcInsert(jdbcTemplate).withTableName("Receipt").usingGeneratedKeyColumns("id");
     }
 
     @Override
     public Long create(Receipt r) {
-        return sji.usingGeneratedKeyColumns("id").executeAndReturnKey(r.getAttributeMap()).longValue();
+        return sji.executeAndReturnKey(r.getAttributeMap()).longValue();
     }
 
     @Override
@@ -37,6 +38,16 @@ public class ReceiptDao implements Dao<Receipt, Long> {
                 "UPDATE Receipt SET date = ?, place = ?, sum = ?, buyer = ? WHERE id = ?",
                 r.getDate(), r.getPlace(), r.getSum(), r.getBuyer(), r.getId()
         );
+    }
+
+    @Override
+    public void delete(Long key) {
+
+    }
+
+    @Override
+    public void deleteAllWhere(Map<String, Long> map) {
+
     }
 
     @Override

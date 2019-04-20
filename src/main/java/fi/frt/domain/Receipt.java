@@ -1,11 +1,12 @@
 package fi.frt.domain;
 
+import fi.frt.utilities.MappingUtils;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Map;
 
-import static fi.frt.utilities.MappingUtils.toMap;
+import static fi.frt.utilities.MappingUtils.setProperty;
 
 
 public class Receipt {
@@ -15,58 +16,35 @@ public class Receipt {
     private BigDecimal sum;
     private String buyer;
 
-/*    private final SimpleLongProperty id = new SimpleLongProperty();
-    private final SimpleObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
-    private final SimpleStringProperty place = new SimpleStringProperty();
-    private final SimpleObjectProperty<BigDecimal> sum = new SimpleObjectProperty<>();
-    private final SimpleStringProperty buyer = new SimpleStringProperty();*/
-    private ArrayList<Purchase> purchases;
-
     public Receipt() {
+    }
+
+    public Receipt(Map<String, Object> map) {
+        setFromMap(map);
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
     public BigDecimal getSum() {
         return sum;
-    }
-
-    public void setSum(BigDecimal sum) {
-        this.sum = sum;
     }
 
     public String getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(String buyer) {
-        this.buyer = buyer;
-    }
-
     public Map<String, Object> getAttributeMap() {
-        return toMap(
+        return MappingUtils.toStrMap(
                 "date", date,
                 "place", place,
                 "sum", sum,
@@ -74,63 +52,29 @@ public class Receipt {
         );
     }
 
-    /*
-    public Long getId() {
-        return id.get();
-    }
-
-    public LocalDate getDate() {
-        return date.get();
-    }
-
-    public String getPlace() {
-        return place.get();
-    }
-
-    public BigDecimal getSum() {
-        return sum.get();
-    }
-
-    public String getBuyer() {
-        return buyer.get();
-    }
-
-    public ArrayList<Purchase> getPurchases() {
-        return purchases;
-    }
-
-    public Map<String, Object> getAttrMap() {
-        return toMap(
-                "date", date.get(),
-                "place", place.get(),
-                "sum", sum.get(),
-                "buyer", buyer.get()
-        );
-    }
-
-    public void setId(Long id) {
-        this.id.set(id);
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setDate(LocalDate date) {
-        this.date.set(date);
+        this.date = date;
     }
 
     public void setPlace(String place) {
-        this.place.set(place);
+        this.place = place;
     }
 
     public void setSum(BigDecimal sum) {
-        this.sum.set(sum);
+        this.sum = sum;
     }
 
     public void setBuyer(String buyer) {
-        this.buyer.set(buyer);
+        this.buyer = buyer;
     }
-*/
 
-    public void setPurchases(ArrayList<Purchase> purchases) {
-        this.purchases = purchases;
+    public void setFromMap(Map<String, Object> map) {
+        map.forEach((k, v) -> setProperty(this, k, v));
     }
+
 
 }

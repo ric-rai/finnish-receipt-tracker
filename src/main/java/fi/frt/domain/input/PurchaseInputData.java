@@ -1,5 +1,7 @@
 package fi.frt.domain.input;
 
+import fi.frt.utilities.MappingUtils;
+
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Map;
@@ -149,5 +151,14 @@ public class PurchaseInputData implements InputData {
 
     public String getType() {
         return type;
+    }
+
+    public Map<String, Object> getAttrMap() {
+        return MappingUtils.toStrMap(
+                "name", name,
+                "quantity", quantity,
+                "price", price,
+                "type", type
+        );
     }
 }

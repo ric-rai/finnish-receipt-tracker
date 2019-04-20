@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 
-import static fi.frt.utilities.MappingUtils.getStringProperty;
+import static fi.frt.utilities.MappingUtils.getStrProperty;
 import static fi.frt.utilities.MappingUtils.setProperty;
 
 public class EditableCellFactory implements Callback<TableColumn<InputData, String>, TableCell<InputData, String>> {
@@ -49,7 +49,7 @@ public class EditableCellFactory implements Callback<TableColumn<InputData, Stri
         public void startEdit() {
             super.startEdit();
             if (!initialized) init();
-            textField.setText(getStringProperty(input, propertyName));
+            textField.setText(getStrProperty(input, propertyName));
             setText(null);
             setGraphic(textField);
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);

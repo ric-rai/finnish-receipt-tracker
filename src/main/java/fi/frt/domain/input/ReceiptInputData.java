@@ -1,5 +1,7 @@
 package fi.frt.domain.input;
 
+import fi.frt.utilities.MappingUtils;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -9,6 +11,7 @@ import java.util.Set;
 import static fi.frt.utilities.CurrencyUtils.CURRENCY_PATTERN;
 import static fi.frt.utilities.DateUtils.DATE_FORMATTER;
 import static fi.frt.utilities.DateUtils.DATE_PATTERN;
+import static fi.frt.utilities.MappingUtils.setProperty;
 
 public class ReceiptInputData implements InputData {
     private boolean valid;
@@ -71,7 +74,6 @@ public class ReceiptInputData implements InputData {
             } catch (Exception e) {
                 valid = false;
                 invalidFields.add("sum");
-                ;
             }
         } else {
             valid = false;
@@ -115,13 +117,9 @@ public class ReceiptInputData implements InputData {
         this.buyerStr = buyerStr;
     }
 
-    public ReceiptInputData setAllFromMap(Map<String, Object> map) {
+    public void setFromMap(Map<String, Object> map) {
         hasChanged = true;
-        dateStr = map.get("date").toString();
-        placeStr = map.get("place").toString();
-        sumStr = map.get("sum").toString();
-        buyerStr = map.get("buyer").toString();
-        return this;
+        map.forEach((k, v) -> setProperty(this, k + "Str", v.toString()));
     }
 
     public LocalDate getDate() {
@@ -138,5 +136,14 @@ public class ReceiptInputData implements InputData {
 
     public String getBuyer() {
         return buyer;
+    }
+
+    public Map<String, Object> getAttrMap() {
+        return MappingUtils.toStrMap(
+                "date", date,
+                "place", place,
+                "sum", sum,
+                "buyer", buyer
+        );
     }
 }

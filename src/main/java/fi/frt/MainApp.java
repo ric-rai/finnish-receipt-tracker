@@ -20,7 +20,7 @@ public class MainApp extends Application {
         fxmlLoader.setControllerFactory(springContext::getBean);
         Parent root = fxmlLoader.load();
         FXMLController fxmlController = fxmlLoader.getController();
-        fxmlController.init();
+        fxmlController.init(stage);
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());

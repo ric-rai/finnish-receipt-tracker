@@ -1,70 +1,87 @@
 package fi.frt.domain;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static fi.frt.utilities.MappingUtils.toMap;
+import static fi.frt.utilities.MappingUtils.setProperty;
+import static fi.frt.utilities.MappingUtils.toStrMap;
 
 public class Purchase {
-    private final SimpleLongProperty id = new SimpleLongProperty();
-    private final SimpleStringProperty name = new SimpleStringProperty();
-    private final SimpleIntegerProperty quantity = new SimpleIntegerProperty();
-    private final SimpleObjectProperty<BigDecimal> price = new SimpleObjectProperty<>();
-    private final SimpleStringProperty type = new SimpleStringProperty();
+    private Long id;
+    private Long receiptId;
+    private String name;
+    private Integer quantity;
+    private BigDecimal price;
+    private String type;
 
-    public long getId() {
-        return id.get();
+    public Purchase() {
+    }
+
+    public Purchase(Map<String, Object> map) {
+        setFromMap(map);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getReceiptId() {
+        return receiptId;
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
 
-    public int getQuantity() {
-        return quantity.get();
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public BigDecimal getPrice() {
-        return price.get();
+        return price;
     }
 
     public String getType() {
-        return type.get();
+        return type;
     }
 
     public Map<String, Object> getAttrMap() {
-        return toMap(
-                "id", id.get(),
-                "name", name.get(),
-                "quantity", quantity.get(),
-                "price", price.get(),
-                "type", type.get()
+        return toStrMap(
+                "id", id,
+                "receiptId", receiptId,
+                "name", name,
+                "quantity", quantity,
+                "price", price,
+                "type", type
         );
     }
 
-    public void setId(long id) {
-        this.id.set(id);
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setReceiptId(Long receiptId) {
+        this.receiptId = receiptId;
     }
 
     public void setName(String name) {
-        this.name.set(name);
+        this.name = name;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity.set(quantity);
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public void setPrice(BigDecimal price) {
-        this.price.set(price);
+        this.price = price;
     }
 
     public void setType(String type) {
-        this.type.set(type);
+        this.type = type;
+    }
+
+    public void setFromMap(Map<String, Object> map) {
+        map.forEach((k, v) -> setProperty(this, k, v));
     }
 
 }

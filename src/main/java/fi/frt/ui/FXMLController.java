@@ -21,22 +21,27 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static fi.frt.utilities.DateUtils.DATE_FORMATTER;
 import static fi.frt.utilities.MappingUtils.setProperty;
-import static fi.frt.utilities.MappingUtils.toMap;
+import static fi.frt.utilities.MappingUtils.toStrMap;
 
 @Component
 public class FXMLController {
 
+    Stage stage;
     @FXML private TableView<Receipt> receiptTable;
     @FXML private Label receiptId;
     @FXML private TextField sum;
@@ -48,7 +53,7 @@ public class FXMLController {
     @FXML private TableColumn<InputData, String> p_quantity;
     @FXML private TableColumn<InputData, String> p_price;
     @FXML private TableColumn<InputData, String> p_type;
-    @FXML private TableView<PurchaseInputData> purchaseInputTable;
+    @FXML private TableView<InputData> purchaseInputTable;
     @FXML private String textForNewPurchaseRow;
     @FXML private String p_nameD;
     @FXML private String p_quantityD;
@@ -65,15 +70,16 @@ public class FXMLController {
     private final List<Receipt> receiptList = FXCollections.observableArrayList(r -> new Observable[]{});
     private final List<Purchase> purchaseList = new ArrayList<>();
     private Map<String, Object> purchaseDefaults;
-    private final ObservableList<PurchaseInputData> purchaseInputList =
+    private final ObservableList<InputData> purchaseInputList =
             FXCollections.observableArrayList(r -> new Observable[]{});
 
-    public void init(){
-        receiptService = new ReceiptService(new ReceiptDao(jdbcTemplate), receiptList);
+    public void init(Stage stage){
+        this.stage = stage;
         purchaseService = new PurchaseService(new PurchaseDao(jdbcTemplate), purchaseList);
-        receiptFields = toMap("date", date, "sum", sum, "place", place, "buyer", buyer);
-        purchaseColumns = toMap("name", p_name, "quantity", p_quantity, "price", p_price, "type", p_type);
-        purchaseDefaults = toMap("name", p_nameD, "quantity", p_quantityD, "price", p_priceD, "type", p_typeD);
+        receiptService = new ReceiptService(new ReceiptDao(jdbcTemplate), purchaseService, receiptList);
+        receiptFields = toStrMap("date", date, "sum", sum, "place", place, "buyer", buyer);
+        purchaseColumns = toStrMap("name", p_name, "quantity", p_quantity, "price", p_price, "type", p_type);
+        purchaseDefaults = toStrMap("name", p_nameD, "quantity", p_quantityD, "price", p_priceD, "type", p_typeD);
         initReceiptTable();
         initPurchaseTable();
     }
@@ -94,11 +100,12 @@ public class FXMLController {
 
     private void initPurchaseTable() {
         purchaseColumns.values().forEach(column -> {
+            column.setSortable(false);
             column.setCellValueFactory(new PropertyValueFactory<>(column.getId().split("_")[1] + "Str"));
             column.setCellFactory(new EditableCellFactory());
             column.setOnEditStart(this::handlePurchaseCellEditStart);
-            column.setOnEditCommit(this::handlePurchaseCellEditCommitAndCancel);
-            column.setOnEditCancel(this::handlePurchaseCellEditCommitAndCancel);
+            column.setOnEditCommit(this::handlePurchaseCellCommitAndCancel);
+            column.setOnEditCancel(this::handlePurchaseCellCommitAndCancel);
         });
         purchaseInputTable.setRowFactory(new LastRowStylerFactory<>());
         setPurchaseInputList();
@@ -106,14 +113,24 @@ public class FXMLController {
         purchaseInputTable.setEditable(true);
     }
 
-    private void handlePurchaseCellEditCommitAndCancel(CellEditEvent<InputData, String> cellEvent) {
-        calculatePurchaseInputSum();
+    private void setPurchaseInputList(){
+        Receipt receipt = receiptSelModel.getSelectedItem();
+        purchaseService.setActivePurchases(receipt != null ? receipt.getId() : null);
+        purchaseInputList.setAll(purchaseList.stream()
+                .map(p -> new PurchaseInputData(p.getAttrMap())).collect(Collectors.toList()));
+        purchaseInputList.add(new PurchaseInputData(toStrMap("name", textForNewPurchaseRow)));
+        calculateSum();
+        purchaseInputTable.refresh();
     }
 
-    private void calculatePurchaseInputSum() {
+    private void handlePurchaseCellCommitAndCancel(CellEditEvent<InputData, String> cellEvent) {
+        calculateSum();
+    }
+
+    private void calculateSum() {
         BigDecimal s = purchaseInputList.stream()
-                .filter(PurchaseInputData::isValid)
-                .map(PurchaseInputData::getPrice)
+                .filter(InputData::isValid)
+                .map(inputData -> (((PurchaseInputData)inputData).getPrice()))
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         sum.setText(s.toString());
@@ -123,18 +140,9 @@ public class FXMLController {
         int row = cellEvent.getTablePosition().getRow();
         if (row == purchaseInputTable.getItems().size() - 1) {
             purchaseInputList.get(row).setFromMap(purchaseDefaults);
-            purchaseInputTable.getItems().add(new PurchaseInputData(toMap("name", textForNewPurchaseRow)));
+            purchaseInputTable.getItems().add(new PurchaseInputData(toStrMap("name", textForNewPurchaseRow)));
             purchaseInputTable.refresh();
         }
-    }
-
-    private void setPurchaseInputList(){
-        Receipt receipt = receiptSelModel.getSelectedItem();
-        purchaseService.setActivePurchases(receipt != null ? receipt.getId() : null);
-        purchaseInputList.setAll(purchaseList.stream()
-                .map(p -> new PurchaseInputData(p.getAttrMap())).collect(Collectors.toList()));
-        purchaseInputList.add(new PurchaseInputData(toMap("name", textForNewPurchaseRow)));
-        calculatePurchaseInputSum();
     }
 
     private void handleReceiptTableSelectionChange(Observable obs, Number old, Number newSelection) {
@@ -146,12 +154,11 @@ public class FXMLController {
         buyer.setText(selectedReceipt.getBuyer());
         receiptFields.values().forEach(field -> field.getStyleClass().remove("invalid"));
         setPurchaseInputList();
-        purchaseInputTable.refresh();
     }
 
     @FXML
     private void handleSave(ActionEvent event) {
-        ReceiptInputData inputData = new ReceiptInputData();
+        InputData inputData = new ReceiptInputData();
         receiptFields.forEach((fName, field) -> setProperty(inputData, fName + "Str", field.getText()));
         receiptFields.values().forEach(field -> field.getStyleClass().remove("invalid"));
         inputData.validate().forEach(fName -> receiptFields.get(fName).getStyleClass().add("invalid"));
@@ -160,10 +167,11 @@ public class FXMLController {
         receiptTable.refresh();
     }
 
-    private void sendReceiptInputData(ReceiptInputData RID){
+    private void sendReceiptInputData(InputData RID){
         Receipt selected = receiptSelModel.getSelectedItem();
-        if (selected == null) receiptSelModel.select(receiptService.newReceipt(RID, purchaseInputList));
-        else receiptService.updateReceipt(selected, RID, purchaseInputList);
+        if (selected != null) receiptService.updateReceipt(selected, RID, purchaseInputList);
+        else receiptSelModel.select(receiptService.newReceipt(RID, purchaseInputList));
+        setPurchaseInputList();
     }
 
     @FXML
