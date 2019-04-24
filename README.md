@@ -31,7 +31,14 @@ Jar-tiedosto generoidaan komennolla
 mvn package
 ```
 
-Jar-tiedosto löytyy _shade_ kansiosta. 
+Jar-tiedosto löytyy _shade_ -kansiosta. Se käynnistetään _shade_ -kansiosta komennolla:
+
+```
+java -jar finnish-receipt-tracker.jar
+```
+
+Käynnistyksen yhteydessä ohjelma luo _receipts.mv.db_ -tietokantatiedoston.
+
 Pom.xml -tiedostosta voit muuttaa jar-tiedoston luomisessa käytettäviä asetuksia, 
 kuten tallennuskansiota ja alustayhteensopivuuutta. Jar-tiedoston käynnistysluokaksi on
 määritelty Launcher -luokka, mikä on vaatimus moduulittomalle ohjelmalle JavaFX 11 -versiossa.
