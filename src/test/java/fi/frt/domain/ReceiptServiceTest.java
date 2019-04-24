@@ -1,15 +1,22 @@
 package fi.frt.domain;
 
 import fi.frt.dao.Dao;
-import fi.frt.domain.input.ReceiptInputData;
+import fi.frt.domain.textinput.TextInput;
 import org.junit.Test;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static fi.frt.utilities.DateUtils.DATE_FORMATTER;
+import static fi.frt.utilities.MappingUtils.toStrMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,37 +24,72 @@ import static org.junit.Assert.assertThat;
 public class ReceiptServiceTest {
     private FakeReceiptDao fakeReceiptDao = new FakeReceiptDao();
     private List<Receipt> receiptList = new ArrayList<>();
-    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao, receiptList);
+    private PurchaseService fakePurchaseService = new FakePurchaseService();
+    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao, fakePurchaseService, receiptList);
     private LocalDate testDate = LocalDate.parse("01.02.2019", DATE_FORMATTER);
     private BigDecimal testSum = new BigDecimal("1.25");
-    private ReceiptInputData fakeRID;
+    private TextInput fakeRcptTextInput;
+    private byte[] testImage = new byte[]{};
 
     @Test
     public void newReceiptWorksCorrectly() {
-        fakeRID = new FakeReceiptInputData(true, testDate, "Place", testSum, "Buyer");
-        receiptService.newReceipt(fakeRID, null);
+        fakeRcptTextInput = new FakeReceiptTextInput(true, testDate, "Place", testSum, "Buyer");
+        List<TextInput> fakePurInputs = new ArrayList<>();
+        fakePurInputs.add(fakeRcptTextInput);
+        receiptService.newReceipt(fakeRcptTextInput, fakePurInputs, testImage);
         Receipt daoReceipt = fakeReceiptDao.getReceipt();
         assertThat(daoReceipt.getDate(), is(testDate));
         assertThat(daoReceipt.getPlace(), is("Place"));
         assertThat(daoReceipt.getSum(), is(testSum));
         assertThat(daoReceipt.getBuyer(), is("Buyer"));
+        assertThat(daoReceipt.getImage().length, is(testImage.length));
         assertThat(receiptList.size(), is(1));
+        assertThat(((FakePurchaseService)fakePurchaseService).getReceiptId(), is(0L));
+        List<TextInput> fakeList = ((FakePurchaseService)fakePurchaseService).getPurchaseInputs();
+        assertThat(fakeList.size(), is(fakeList.size()));
+        assertThat(fakeList.get(0), is(fakeRcptTextInput));
     }
 
     @Test
     public void updateReceiptWorksCorrectly(){
-        fakeRID = new FakeReceiptInputData(true, testDate, "Place", testSum, "Buyer");
+        fakeRcptTextInput = new FakeReceiptTextInput(true, testDate, "Place", testSum, "Buyer");
         Receipt receipt = new Receipt();
-        receiptService.updateReceipt(receipt, fakeRID, null);
+        List<TextInput> fakePurInputs = new ArrayList<>();
+        fakePurInputs.add(fakeRcptTextInput);
+        receiptService.updateReceipt(receipt, fakeRcptTextInput, fakePurInputs, testImage);
         Receipt daoReceipt = fakeReceiptDao.getReceipt();
         assertThat(receipt.getDate(), is(testDate));
         assertThat(receipt.getPlace(), is("Place"));
         assertThat(receipt.getSum(), is(testSum));
         assertThat(receipt.getBuyer(), is("Buyer"));
+        assertThat(receipt.getImage().length, is(testImage.length));
         assertThat(daoReceipt.getDate(), is(testDate));
         assertThat(daoReceipt.getPlace(), is("Place"));
         assertThat(daoReceipt.getSum(), is(testSum));
         assertThat(daoReceipt.getBuyer(), is("Buyer"));
+        assertThat(daoReceipt.getImage().length, is(testImage.length));
+        List<TextInput> fakeList = ((FakePurchaseService)fakePurchaseService).getPurchaseInputs();
+        assertThat(fakeList.size(), is(fakeList.size()));
+        assertThat(fakeList.get(0), is(fakeRcptTextInput));
+    }
+
+    @Test
+    public void prepareNewImageIsWorkingCorrectly() {
+        BufferedImage img = new BufferedImage(400, 700, BufferedImage.TYPE_INT_RGB);
+        File file = new File("src/test/resources/_test_image.jpg");
+        try {
+            ImageIO.write(img, "JPEG", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] testArray = new byte[]{};
+        try {
+            testArray = receiptService.prepareNewImage(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertThat(testArray.length, is(1991));
+        file.delete();
     }
 
     class FakeReceiptDao implements Dao<Receipt, Long> {
@@ -60,13 +102,28 @@ public class ReceiptServiceTest {
         }
 
         @Override
-        public Receipt read(Long key) {
+        public Receipt get(Long key) {
+            return null;
+        }
+
+        @Override
+        public List<Receipt> getByValue(Map<String, Object> map) {
             return null;
         }
 
         @Override
         public void update(Receipt r) {
             this.receipt = r;
+        }
+
+        @Override
+        public void delete(Long key) {
+
+        }
+
+        @Override
+        public void deleteByValue(Map<String, Object> map) {
+
         }
 
         @Override
@@ -79,14 +136,14 @@ public class ReceiptServiceTest {
         }
     }
 
-    class FakeReceiptInputData extends ReceiptInputData{
+    class FakeReceiptTextInput implements TextInput {
         private boolean valid;
         private LocalDate date;
         private String place;
         private BigDecimal sum;
         private String buyer;
 
-        public FakeReceiptInputData(boolean valid, LocalDate date, String place, BigDecimal sum, String buyer) {
+        public FakeReceiptTextInput(boolean valid, LocalDate date, String place, BigDecimal sum, String buyer) {
             this.valid = valid;
             this.date = date;
             this.place = place;
@@ -95,28 +152,53 @@ public class ReceiptServiceTest {
         }
 
         @Override
+        public Set<String> validate() {
+            return null;
+        }
+
+        @Override
         public boolean isValid() {
             return valid;
         }
 
         @Override
-        public LocalDate getDate() {
-            return date;
+        public Set<String> getInvalidFields() {
+            return null;
         }
 
         @Override
-        public String getPlace() {
-            return place;
+        public Map<String, Object> getAttrMap() {
+            return toStrMap(
+                    "date", date,
+                    "place", place,
+                    "sum", sum,
+                    "buyer", buyer
+            );
         }
 
         @Override
-        public BigDecimal getSum() {
-            return sum;
+        public void setFromMap(Map<String, Object> map) {
+
         }
 
+    }
+
+    class FakePurchaseService extends PurchaseService {
+        Long receiptId;
+        List<TextInput> purchaseInputs;
+
         @Override
-        public String getBuyer() {
-            return buyer;
+        public void setNewPurchases(Long receiptId, List<TextInput> purchaseInputs) {
+            this.receiptId = receiptId;
+            this.purchaseInputs = purchaseInputs;
+        }
+
+        public Long getReceiptId() {
+            return receiptId;
+        }
+
+        public List<TextInput> getPurchaseInputs() {
+            return purchaseInputs;
         }
     }
 

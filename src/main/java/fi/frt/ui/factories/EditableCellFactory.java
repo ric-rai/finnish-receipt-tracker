@@ -1,6 +1,6 @@
 package fi.frt.ui.factories;
 
-import fi.frt.domain.input.InputData;
+import fi.frt.domain.textinput.TextInput;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -12,21 +12,21 @@ import javafx.util.Callback;
 import static fi.frt.utilities.MappingUtils.getStrProperty;
 import static fi.frt.utilities.MappingUtils.setProperty;
 
-public class EditableCellFactory implements Callback<TableColumn<InputData, String>, TableCell<InputData, String>> {
+public class EditableCellFactory implements Callback<TableColumn<TextInput, String>, TableCell<TextInput, String>> {
 
     @Override
-    public TableCell<InputData, String> call(TableColumn<InputData, String> stTableColumn) {
+    public TableCell<TextInput, String> call(TableColumn<TextInput, String> stTableColumn) {
         return new EditableCell(stTableColumn);
     }
 
-    public class EditableCell extends TableCell<InputData, String> {
+    public class EditableCell extends TableCell<TextInput, String> {
         boolean invalid;
         private TextField textField;
         private String propertyName;
-        private InputData input;
+        private TextInput input;
         private boolean initialized;
 
-        EditableCell(TableColumn<InputData, String> column) {
+        EditableCell(TableColumn<TextInput, String> column) {
             super();
             this.propertyName = ((PropertyValueFactory)column.getCellValueFactory()).getProperty();
         }
@@ -80,7 +80,7 @@ public class EditableCellFactory implements Callback<TableColumn<InputData, Stri
                     setContentDisplay(ContentDisplay.TEXT_ONLY);
                 }
                 if (initialized) {
-                    boolean invalid = input.getInvalidFields().contains(propertyName);
+                    boolean invalid = input.getInvalidFields().contains(propertyName.replace("Str", ""));
                     if (invalid) {
                         if (!this.invalid) {
                             getStyleClass().add("invalid");

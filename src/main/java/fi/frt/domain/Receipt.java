@@ -10,11 +10,12 @@ import static fi.frt.utilities.MappingUtils.setProperty;
 
 
 public class Receipt {
-    private long id;
+    private Long id;
     private LocalDate date;
     private String place;
     private BigDecimal sum;
     private String buyer;
+    private byte[] image = new byte[0];
 
     public Receipt() {
     }
@@ -23,7 +24,7 @@ public class Receipt {
         setFromMap(map);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -43,16 +44,22 @@ public class Receipt {
         return buyer;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
     public Map<String, Object> getAttributeMap() {
         return MappingUtils.toStrMap(
+                "id", id,
                 "date", date,
                 "place", place,
                 "sum", sum,
-                "buyer", buyer
+                "buyer", buyer,
+                "image", image
         );
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,6 +77,10 @@ public class Receipt {
 
     public void setBuyer(String buyer) {
         this.buyer = buyer;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public void setFromMap(Map<String, Object> map) {

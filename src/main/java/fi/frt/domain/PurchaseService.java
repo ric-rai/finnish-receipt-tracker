@@ -1,7 +1,7 @@
 package fi.frt.domain;
 
 import fi.frt.dao.Dao;
-import fi.frt.domain.input.InputData;
+import fi.frt.domain.textinput.TextInput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +15,9 @@ public class PurchaseService {
     private Dao<Purchase, Long> purchaseDao;
     private List<Purchase> activePurchasesList;
     private Map<Long, List<Purchase>> allPurchases = new HashMap<>();
+
+    public PurchaseService(){
+    }
 
     public PurchaseService(Dao<Purchase, Long> purchaseDao, List<Purchase> activePurchasesList) {
         this.purchaseDao = purchaseDao;
@@ -35,18 +38,18 @@ public class PurchaseService {
         activePurchasesList.addAll(allPurchases.getOrDefault(receiptId, new ArrayList<>()));
     }
 
-    public void setNewPurchases(Long receiptId, List<InputData> purchaseInputs) {
+    public void setNewPurchases(Long receiptId, List<TextInput> purchaseInputs) {
         deleteReceiptPurchases(receiptId);
         List<Purchase> purchases = purchaseInputs.stream()
-                .filter(InputData::isValid)
+                .filter(TextInput::isValid)
                 .map(pid -> new Purchase(toStrMap(pid.getAttrMap(), "receiptId", receiptId)))
                 .collect(Collectors.toList());
         purchases.forEach(p -> purchaseDao.create(p));
         allPurchases.put(receiptId, purchases);
     }
 
-    public void deleteReceiptPurchases(Long receiptId) {
-        purchaseDao.deleteAllWhere(toStrMap("receiptId", receiptId));
+    private void deleteReceiptPurchases(Long receiptId) {
+        purchaseDao.deleteByValue(toStrMap("receiptId", receiptId));
     }
 
 }

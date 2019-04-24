@@ -1,4 +1,4 @@
-package fi.frt.domain.input;
+package fi.frt.domain.textinput;
 
 import fi.frt.utilities.MappingUtils;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 import static fi.frt.utilities.CurrencyUtils.CURRENCY_PATTERN;
 import static fi.frt.utilities.MappingUtils.setProperty;
 
-public class PurchaseInputData implements InputData {
+public class PurchaseTextInput implements TextInput {
     private boolean valid;
     private boolean hasChanged;
     private String nameStr = "";
@@ -23,10 +23,10 @@ public class PurchaseInputData implements InputData {
     private BigDecimal price;
     private String type;
 
-    public PurchaseInputData() {
+    public PurchaseTextInput() {
     }
 
-    public PurchaseInputData(Map<String, Object> map) {
+    public PurchaseTextInput(Map<String, Object> map) {
         setFromMap(map);
     }
 
@@ -51,7 +51,7 @@ public class PurchaseInputData implements InputData {
     private void validateName() {
         if (nameStr.trim().isEmpty()) {
             valid = false;
-            invalidFields.add("nameStr");
+            invalidFields.add("name");
         } else {
             name = nameStr;
         }
@@ -62,7 +62,7 @@ public class PurchaseInputData implements InputData {
             quantity = Integer.parseInt(quantityStr);
         } catch (Exception e) {
             valid = false;
-            invalidFields.add("quantityStr");
+            invalidFields.add("quantity");
         }
     }
 
@@ -72,18 +72,18 @@ public class PurchaseInputData implements InputData {
                 price = new BigDecimal(priceStr);
             } catch (Exception e) {
                 valid = false;
-                invalidFields.add("priceStr");
+                invalidFields.add("price");
             }
         } else {
             valid = false;
-            invalidFields.add("priceStr");
+            invalidFields.add("price");
         }
     }
 
     private void validateType() {
         if (typeStr.trim().isEmpty()) {
             valid = false;
-            invalidFields.add("typeStr");
+            invalidFields.add("type");
         } else {
             type = typeStr;
         }

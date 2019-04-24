@@ -9,27 +9,33 @@ import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
 public class MainApp extends Application {
+    private ConfigurableApplicationContext springContext;
 
     @Override
     public void start(Stage stage) throws Exception {
-        ConfigurableApplicationContext springContext = SpringApplication.run(MainApp.class);
+        springContext = SpringApplication.run(MainApp.class);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("scene.fxml"));
         fxmlLoader.setControllerFactory(springContext::getBean);
         Parent root = fxmlLoader.load();
         FXMLController fxmlController = fxmlLoader.getController();
-        fxmlController.init(stage);
+        fxmlController.init(stage, springContext.getBean("jdbcTemplate", JdbcTemplate.class));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
-        stage.setTitle("Kuittiseuranta");
         stage.setScene(scene);
         stage.show();
     }
 
+    @Override
+    public void stop() {
+        springContext.close();
+        System.exit(0);
+    }
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.

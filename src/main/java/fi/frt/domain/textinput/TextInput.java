@@ -1,9 +1,9 @@
-package fi.frt.domain.input;
+package fi.frt.domain.textinput;
 
 import java.util.Map;
 import java.util.Set;
 
-public interface InputData {
+public interface TextInput {
     Set<String> validate();
     boolean isValid();
     Set<String> getInvalidFields();

@@ -1,115 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import fi.frt.ui.components.ZoomableImageView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import java.lang.String?>
+<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
 <BorderPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.frt.ui.FXMLController">
-   <top>
-       <MenuBar BorderPane.alignment="CENTER">
-           <Menu mnemonicParsing="false" text="Tiedosto">
-               <MenuItem mnemonicParsing="false" onAction="#handleNewReceipt" text="Uusi kuitti" />
-               <MenuItem mnemonicParsing="false" text="Sulje" />
-           </Menu>
-           <Menu mnemonicParsing="false" text="Muokkaa">
-               <MenuItem mnemonicParsing="false" text="Poista" />
-           </Menu>
-           <Menu mnemonicParsing="false" text="Näytä">
-               <MenuItem mnemonicParsing="false" text="About" />
-           </Menu>
-       </MenuBar>
-   </top>
-   <left>
-       <ScrollPane prefHeight="691.0" prefWidth="330.0" BorderPane.alignment="CENTER">
-           <TableView fx:id="receiptTable" prefHeight="689.0" prefWidth="327.0">
-               <columns>
-                   <TableColumn fx:id="r_date" prefWidth="100.0" text="Päivämäärä" />
-                   <TableColumn id="r_place" prefWidth="99.0" text="Ostopaikka" />
-                   <TableColumn id="r_sum" prefWidth="54.0" text="Yhteensä" />
-                   <TableColumn id="r_buyer" prefWidth="72.0" text="Ostaja" />
-               </columns>
-           </TableView>
-       </ScrollPane>
-   </left>
-   <center>
-       <VBox styleClass="receipt-content" BorderPane.alignment="CENTER">
-           <padding>
-               <Insets left="30.0" right="30.0" top="30.0" />
-           </padding>
-         <HBox prefWidth="200.0">
-            <children>
-                 <Label text="Kuitti " />
-                 <Label fx:id="receiptId" text="0000000" />
-            </children>
-         </HBox>
-           <GridPane vgap="5.0">
-               <columnConstraints>
-                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="17.0" />
-                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
-                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="6.0" />
-                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="10.0" />
-                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
-               </columnConstraints>
-               <rowConstraints>
-                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <VBox.margin>
-                   <Insets top="20.0" />
-               </VBox.margin>
-               <Label text="Ostaja" GridPane.columnIndex="3" />
-               <Label prefHeight="16.0" prefWidth="84.0" text="Ostopaikka" />
-               <Label text="Päivämäärä" GridPane.rowIndex="1" />
-               <TextField fx:id="buyer" GridPane.columnIndex="4" />
-               <TextField fx:id="place" GridPane.columnIndex="1" />
-               <TextField fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-           </GridPane>
-           <TableView fx:id="purchaseInputTable" prefHeight="304.0" prefWidth="575.0">
-               <String fx:id="textForNewPurchaseRow" fx:value="Lisää uusi..."/>
-               <String fx:id="p_nameD" fx:value="Ostos"/>
-               <String fx:id="p_quantityD" fx:value="0"/>
-               <String fx:id="p_priceD" fx:value="0.0"/>
-               <String fx:id="p_typeD" fx:value="Ostos"/>
-               <columns>
-                   <TableColumn fx:id="p_name" prefWidth="96.0" text="Nimike" />
-                   <TableColumn fx:id="p_quantity" prefWidth="61.0" text="Määrä" />
-                   <TableColumn fx:id="p_price" prefWidth="75.0" text="Hinta" />
-                   <TableColumn fx:id="p_type" prefWidth="104.0" text="Tyyppi" />
-                   <!--<TableColumn prefWidth="238.0" text="Ehdotukset" />-->
-               </columns>
-              <VBox.margin>
-                  <Insets top="30.0" />
-              </VBox.margin>
-           </TableView>
-           <BorderPane prefHeight="200.0" prefWidth="200.0">
-              <right>
-                  <HBox spacing="30.0" BorderPane.alignment="CENTER">
-                      <Button mnemonicParsing="false" text="Uusi" onAction="#handleNewReceipt" />
-                      <Button mnemonicParsing="false" onAction="#handleSave" text="Tallenna" />
-                  </HBox>
-              </right>
-              <VBox.margin>
-                  <Insets left="30.0" right="30.0" top="30.0" />
-              </VBox.margin>
-              <left>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
-                      <Label text="Yhteensä:" />
-                      <TextField fx:id="sum" editable="false" layoutX="10.0" layoutY="10.0" prefWidth="50.0" styleClass="label-like" text="0,00">
-                          <padding>
-                              <Insets left="10.0" />
-                          </padding>
-                      </TextField>
-                      <Label layoutX="84.0" layoutY="10.0" text="€" />
-                  </HBox>
-              </left>
-           </BorderPane>
-       </VBox>
-   </center>
-   <right>
-       <ImageView fitHeight="691.0" fitWidth="332.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-           <Image url="@../../sample-receipt.jpg" />
-       </ImageView>
-   </right>
+    <Text visible="false" managed="false">
+        <String fx:id="title" fx:value="Kuittiseuranta" />
+    </Text>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="Tiedosto">
+                <MenuItem mnemonicParsing="false" onAction="#handleNewReceipt" text="Uusi kuitti" />
+                <MenuItem mnemonicParsing="false" text="Sulje" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Muokkaa">
+                <MenuItem mnemonicParsing="false" text="Poista" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Näytä">
+                <MenuItem mnemonicParsing="false" text="About" />
+            </Menu>
+        </MenuBar>
+    </top>
+    <left>
+        <ScrollPane prefHeight="691.0" prefWidth="330.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="receiptTable" prefHeight="689.0" prefWidth="327.0">
+                <columns>
+                    <TableColumn fx:id="r_date" prefWidth="100.0" text="Päivämäärä" />
+                    <TableColumn id="r_place" prefWidth="99.0" text="Ostopaikka" />
+                    <TableColumn id="r_sum" prefWidth="54.0" text="Yhteensä" />
+                    <TableColumn id="r_buyer" prefWidth="72.0" text="Ostaja" />
+                </columns>
+            </TableView>
+        </ScrollPane>
+    </left>
+    <center>
+        <VBox BorderPane.alignment="CENTER">
+            <padding>
+                <Insets left="30.0" right="30.0" top="30.0" />
+            </padding>
+            <HBox id="receiptTitle" prefWidth="200.0">
+                <Label text="Kuitti " />
+                <Label fx:id="receiptId" text="0000000" />
+            </HBox>
+            <GridPane id="receiptData" vgap="5.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="17.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="6.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="10.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <VBox.margin>
+                    <Insets top="20.0" />
+                </VBox.margin>
+                <Label text="Ostaja" GridPane.columnIndex="3" />
+                <Label prefHeight="16.0" prefWidth="84.0" text="Ostopaikka" />
+                <Label text="Päivämäärä" GridPane.rowIndex="1" />
+                <TextField fx:id="buyer" GridPane.columnIndex="4" />
+                <TextField fx:id="place" GridPane.columnIndex="1" />
+                <TextField fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </GridPane>
+            <TableView fx:id="purchaseInputTable" prefHeight="304.0" prefWidth="575.0">
+                <String fx:id="newPurchaseRow" fx:value="Lisää uusi..." />
+                <String fx:id="p_nameD" fx:value="Ostos" />
+                <String fx:id="p_quantityD" fx:value="0" />
+                <String fx:id="p_priceD" fx:value="0.0" />
+                <String fx:id="p_typeD" fx:value="Ostos" />
+                <columns>
+                    <TableColumn fx:id="p_name" prefWidth="96.0" text="Nimike" />
+                    <TableColumn fx:id="p_quantity" prefWidth="61.0" text="Määrä" />
+                    <TableColumn fx:id="p_price" prefWidth="75.0" text="Hinta" />
+                    <TableColumn fx:id="p_type" prefWidth="104.0" text="Tyyppi" />
+                    <!--<TableColumn prefWidth="238.0" text="Ehdotukset" />-->
+                </columns>
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+            </TableView>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+                <right>
+                    <HBox id="receiptButtons">
+                        <Button mnemonicParsing="false" onAction="#handleNewReceipt" text="Uusi" />
+                        <Button mnemonicParsing="false" onAction="#handleSave" text="Tallenna" />
+                        <Button mnemonicParsing="false" onAction="#addImage" text="Lisää kuva" />
+                        <Text managed="false" visible="false">
+                            <String fx:id="fileChooserTitle" fx:value="Valitse kuvatiedosto" />
+                            <String fx:id="allImagesText" fx:value="Kaikki kuvat" />
+                            <String fx:id="imgAlertTitle" fx:value="Huomautus" />
+                            <String fx:id="imgAlert" fx:value="Kuvan lataaminen ei onnistunut!" />
+                        </Text>
+                    </HBox>
+                </right>
+                <VBox.margin>
+                    <Insets left="30.0" right="30.0" top="30.0" />
+                </VBox.margin>
+                <left>
+                    <HBox id="sumBox" spacing="5.0" BorderPane.alignment="CENTER">
+                        <TextField fx:id="sum" visible="false" managed="false"/>
+                        <Label text="Yhteensä: "/>
+                        <Label id="sumText" text="${sum.text}" />
+                        <Label text=" €"/>
+                    </HBox>
+                </left>
+            </BorderPane>
+        </VBox>
+    </center>
+    <right>
+        <ZoomableImageView fx:id="imageView" minHeight="700" minWidth="400">
+            <HBox id="imgButtons">
+                <Button id="resetView" text="Oletusnäkymä"/>
+                <Button id="fullView" text="Kokonaisnäkymä"/>
+            </HBox>
+        </ZoomableImageView>
+    </right>
 </BorderPane>

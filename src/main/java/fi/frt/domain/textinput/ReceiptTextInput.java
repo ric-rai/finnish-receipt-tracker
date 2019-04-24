@@ -1,4 +1,4 @@
-package fi.frt.domain.input;
+package fi.frt.domain.textinput;
 
 import fi.frt.utilities.MappingUtils;
 
@@ -13,7 +13,7 @@ import static fi.frt.utilities.DateUtils.DATE_FORMATTER;
 import static fi.frt.utilities.DateUtils.DATE_PATTERN;
 import static fi.frt.utilities.MappingUtils.setProperty;
 
-public class ReceiptInputData implements InputData {
+public class ReceiptTextInput implements TextInput {
     private boolean valid;
     private boolean hasChanged;
     private String dateStr = "";

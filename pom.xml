@@ -63,6 +63,11 @@
             <artifactId>h2</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.tinify</groupId>
+            <artifactId>tinify</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -139,7 +144,6 @@
                 </executions>
                 <configuration>
                     <mainClass>fi.frt.MainApp</mainClass>
-                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
 

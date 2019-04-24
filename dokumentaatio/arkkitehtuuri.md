@@ -35,5 +35,5 @@ Pakkauksen _dao_ -luokat huolehtivat tietojen pysyväistallennuksesta. Ne noudat
 
 Kuittitiedot tallennetaan H2-tietokantaan. Varsinaisten Dao-luokkien testauksessa käytetään hyväksi keskusmuistiin väliaikaisesti luotavaa H2-tietokantaa.
 
-Hakemistossa _/src/main/java/resources_ sijaitsevassa _application.properties_ -tidostossa on määritelty H2-tietokannan sijainti ja nimi, sekä käyttäjätunnus ja salasana. Saman hakemiston _schema.sql_ -tiedostossa on määritelty tietokannan taulujen luomiseen käytettävän SQL-lauseet, ja _data.sql_ -tiedostossa on määriteltynä tietokantaan oletuksena syötettävät tiedot. Kummankin tiedoston sisältämät SQL-kyselyt tehdään joka kerta, kun sovellus käynnistetään.  
+Hakemistossa _/src/main/java/resources_ sijaitsevassa _application.properties_ -tidostossa on määritelty H2-tietokannan sijainti ja nimi, sekä käyttäjätunnus ja salasana. Saman hakemiston _schema.sql_ -tiedostossa on määritelty tietokannan taulujen luomiseen käytettävät SQL-lauseet, ja _data.sql_ -tiedostossa on määriteltynä tietokantaan oletuksena syötettävät tiedot. Kummankin tiedoston sisältämät SQL-kyselyt tehdään joka kerta, kun sovellus käynnistetään.
 
