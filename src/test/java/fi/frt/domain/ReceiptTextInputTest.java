@@ -31,7 +31,6 @@ public class ReceiptTextInputTest {
         receiptInput.setPlaceStr(placeStr);
         receiptInput.setSumStr(sumStr);
         receiptInput.setBuyerStr(buyerStr);
-        receiptInput.validate();
         assertThat(receiptInput.isValid(), is(expected));
         if (receiptInput.isValid()) {
             LocalDate testDate = LocalDate.parse(dateStr, DATE_FORMATTER);

@@ -28,7 +28,6 @@ public class PurchaseTextInputTest {
         purchaseInput.setQuantityStr(quantityStr);
         purchaseInput.setPriceStr(priceStr);
         purchaseInput.setTypeStr(typeStr);
-        purchaseInput.validate();
         assertThat(purchaseInput.isValid(), is(expected));
         if (purchaseInput.isValid()) {
             BigDecimal price = new BigDecimal(priceStr);

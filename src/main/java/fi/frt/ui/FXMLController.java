@@ -13,6 +13,7 @@ import fi.frt.ui.components.ZoomableImageView;
 import fi.frt.ui.factories.CellFormatterFactory;
 import fi.frt.ui.factories.EditableCellFactory;
 import fi.frt.ui.factories.LastRowStylerFactory;
+import fi.frt.ui.factories.TypeSuggestionCellFactory;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -58,6 +59,7 @@ public class FXMLController {
     @FXML private TableColumn<TextInput, String> p_quantity;
     @FXML private TableColumn<TextInput, String> p_price;
     @FXML private TableColumn<TextInput, String> p_type;
+    @FXML private TableColumn<TextInput, Void> p_suggestions;
     @FXML private TableView<TextInput> purchaseInputTable;
     @FXML public ZoomableImageView imageView;
 
@@ -88,7 +90,7 @@ public class FXMLController {
         this.stage = stage;
         stage.setTitle(title);
         purchaseService = new PurchaseService(new PurchaseDao(jdbcTemplate), purchaseList);
-        receiptService = new ReceiptService(new ReceiptDao(jdbcTemplate), purchaseService, receiptList);
+        receiptService = new ReceiptService(new ReceiptDao(jdbcTemplate), receiptList);
         receiptFields = toStrMap("date", date, "sum", sum, "place", place, "buyer", buyer);
         purchaseColumns = toStrMap("name", p_name, "quantity", p_quantity, "price", p_price, "type", p_type);
         purchaseDefaults = toStrMap("name", p_nameD, "quantity", p_quantityD, "price", p_priceD, "type", p_typeD);
@@ -120,6 +122,7 @@ public class FXMLController {
             column.setOnEditCommit(this::handlePurchaseCellCommitAndCancel);
             column.setOnEditCancel(this::handlePurchaseCellCommitAndCancel);
         });
+        p_suggestions.setCellFactory(new TypeSuggestionCellFactory(purchaseService));
         purchaseInputTable.setRowFactory(new LastRowStylerFactory<>());
         setPurchaseInputList();
         purchaseInputTable.setItems(purInputList);
@@ -180,7 +183,7 @@ public class FXMLController {
         TextInput textInput = new ReceiptTextInput();
         receiptFields.forEach((fName, field) -> setProperty(textInput, fName + "Str", field.getText()));
         receiptFields.values().forEach(field -> field.getStyleClass().remove("invalid"));
-        textInput.validate().forEach(fName -> receiptFields.get(fName).getStyleClass().add("invalid"));
+        textInput.getInvalidFields().forEach(fName -> receiptFields.get(fName).getStyleClass().add("invalid"));
         if(!textInput.isValid()) return;
         sendReceiptInputData(textInput);
         receiptTable.refresh();
@@ -188,8 +191,14 @@ public class FXMLController {
 
     private void sendReceiptInputData(TextInput rcptInput){
         Receipt selected = receiptSelModel.getSelectedItem();
-        if (selected != null) receiptService.updateReceipt(selected, rcptInput, purInputList, imageView.getImage());
-        else receiptSelModel.select(receiptService.newReceipt(rcptInput, purInputList, imageView.getImage()));
+        if (selected != null) {
+            receiptService.updateReceipt(selected, rcptInput, imageView.getImage());
+            purchaseService.setNewPurchases(selected.getId(), purInputList);
+        } else {
+            Receipt newReceipt = receiptService.newReceipt(rcptInput, imageView.getImage());
+            purchaseService.setNewPurchases(newReceipt.getId(), purInputList);
+            receiptSelModel.select(newReceipt);
+        }
         setPurchaseInputList();
     }
 

@@ -48,15 +48,13 @@ public class Receipt {
         return image;
     }
 
+    /**
+     * Metodi palauttaa olion attribuuttien arvot Map-olioon määriteltyinä.
+     *
+     * @return Map - {"nameOfAttr1", valueOfAttr1}, {"nameOfAttr2", valueOfAttr2} ...
+     */
     public Map<String, Object> getAttributeMap() {
-        return MappingUtils.toStrMap(
-                "id", id,
-                "date", date,
-                "place", place,
-                "sum", sum,
-                "buyer", buyer,
-                "image", image
-        );
+        return MappingUtils.toStrMap("id", id, "date", date, "place", place, "sum", sum, "buyer", buyer, "image", image);
     }
 
     public void setId(Long id) {
@@ -83,6 +81,13 @@ public class Receipt {
         this.image = image;
     }
 
+    /**
+     * Metodi asettaa olion attribuutit annetun Map-olion mukaisiin arvoihin. Map-oliossa tulee olla avain-arvo -pareina
+     * asetettavan olion attribuuttien nimet ja arvot. Metodia kutsuvan luokan ei siis välttämättä tarvitse tuntea
+     * oliota, kunhan kutsuvalla luokalla on käytössään sopiva attribuutit määrittelevä Map-olio.
+     *
+     * @param map Map-olio, johon on määritelty attribuuttien uusia arvoja
+     */
     public void setFromMap(Map<String, Object> map) {
         map.forEach((k, v) -> setProperty(this, k, v));
     }

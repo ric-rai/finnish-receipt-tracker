@@ -24,8 +24,7 @@ import static org.junit.Assert.assertThat;
 public class ReceiptServiceTest {
     private FakeReceiptDao fakeReceiptDao = new FakeReceiptDao();
     private List<Receipt> receiptList = new ArrayList<>();
-    private PurchaseService fakePurchaseService = new FakePurchaseService();
-    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao, fakePurchaseService, receiptList);
+    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao, receiptList);
     private LocalDate testDate = LocalDate.parse("01.02.2019", DATE_FORMATTER);
     private BigDecimal testSum = new BigDecimal("1.25");
     private TextInput fakeRcptTextInput;
@@ -34,9 +33,7 @@ public class ReceiptServiceTest {
     @Test
     public void newReceiptWorksCorrectly() {
         fakeRcptTextInput = new FakeReceiptTextInput(true, testDate, "Place", testSum, "Buyer");
-        List<TextInput> fakePurInputs = new ArrayList<>();
-        fakePurInputs.add(fakeRcptTextInput);
-        receiptService.newReceipt(fakeRcptTextInput, fakePurInputs, testImage);
+        receiptService.newReceipt(fakeRcptTextInput, testImage);
         Receipt daoReceipt = fakeReceiptDao.getReceipt();
         assertThat(daoReceipt.getDate(), is(testDate));
         assertThat(daoReceipt.getPlace(), is("Place"));
@@ -44,19 +41,13 @@ public class ReceiptServiceTest {
         assertThat(daoReceipt.getBuyer(), is("Buyer"));
         assertThat(daoReceipt.getImage().length, is(testImage.length));
         assertThat(receiptList.size(), is(1));
-        assertThat(((FakePurchaseService)fakePurchaseService).getReceiptId(), is(0L));
-        List<TextInput> fakeList = ((FakePurchaseService)fakePurchaseService).getPurchaseInputs();
-        assertThat(fakeList.size(), is(fakeList.size()));
-        assertThat(fakeList.get(0), is(fakeRcptTextInput));
     }
 
     @Test
     public void updateReceiptWorksCorrectly(){
         fakeRcptTextInput = new FakeReceiptTextInput(true, testDate, "Place", testSum, "Buyer");
         Receipt receipt = new Receipt();
-        List<TextInput> fakePurInputs = new ArrayList<>();
-        fakePurInputs.add(fakeRcptTextInput);
-        receiptService.updateReceipt(receipt, fakeRcptTextInput, fakePurInputs, testImage);
+        receiptService.updateReceipt(receipt, fakeRcptTextInput, testImage);
         Receipt daoReceipt = fakeReceiptDao.getReceipt();
         assertThat(receipt.getDate(), is(testDate));
         assertThat(receipt.getPlace(), is("Place"));
@@ -68,9 +59,6 @@ public class ReceiptServiceTest {
         assertThat(daoReceipt.getSum(), is(testSum));
         assertThat(daoReceipt.getBuyer(), is("Buyer"));
         assertThat(daoReceipt.getImage().length, is(testImage.length));
-        List<TextInput> fakeList = ((FakePurchaseService)fakePurchaseService).getPurchaseInputs();
-        assertThat(fakeList.size(), is(fakeList.size()));
-        assertThat(fakeList.get(0), is(fakeRcptTextInput));
     }
 
     @Test
@@ -152,11 +140,6 @@ public class ReceiptServiceTest {
         }
 
         @Override
-        public Set<String> validate() {
-            return null;
-        }
-
-        @Override
         public boolean isValid() {
             return valid;
         }
@@ -181,25 +164,6 @@ public class ReceiptServiceTest {
 
         }
 
-    }
-
-    class FakePurchaseService extends PurchaseService {
-        Long receiptId;
-        List<TextInput> purchaseInputs;
-
-        @Override
-        public void setNewPurchases(Long receiptId, List<TextInput> purchaseInputs) {
-            this.receiptId = receiptId;
-            this.purchaseInputs = purchaseInputs;
-        }
-
-        public Long getReceiptId() {
-            return receiptId;
-        }
-
-        public List<TextInput> getPurchaseInputs() {
-            return purchaseInputs;
-        }
     }
 
 }

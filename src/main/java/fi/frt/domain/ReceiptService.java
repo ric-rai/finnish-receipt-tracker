@@ -11,34 +11,58 @@ import java.util.List;
 public class ReceiptService {
 
     private Dao<Receipt, Long> receiptDao;
-    private final PurchaseService purchaseService;
     private List<Receipt> receiptList;
 
-    public ReceiptService(Dao<Receipt, Long> rDao, PurchaseService pSvc, List<Receipt> rList) {
+    /**
+     * Luo uuden ReceiptService -olion.
+     *
+     * @param rDao  Dao-rajapinnan toteuttava olio
+     * @param rList Lista, jossa pidetään kaikkien kuittien tietoja
+     */
+    public ReceiptService(Dao<Receipt, Long> rDao, List<Receipt> rList) {
         this.receiptDao = rDao;
-        this.purchaseService = pSvc;
         this.receiptList = rList;
         this.receiptList.addAll(receiptDao.list());
         Tinify.setKey("oSYQ7WOXulfGcEfPvHsF0mYvsrOlE3gB");
     }
 
-    public Receipt newReceipt(TextInput receiptInput, List<TextInput> purInputs, byte[] img) {
+    /**
+     * Luo uuden kuitin.
+     *
+     * @param receiptInput Syötetekstiolio, joka kuvaa kuittitietoja
+     * @param img          kuitin kuvadata tavutaulukkona
+     * @return Luotu Receipt-olio
+     */
+    public Receipt newReceipt(TextInput receiptInput, byte[] img) {
         Receipt receipt = new Receipt(receiptInput.getAttrMap());
         receipt.setImage(img);
         Long receiptId = receiptDao.create(receipt);
         receipt.setId(receiptId);
-        purchaseService.setNewPurchases(receiptId, purInputs);
         receiptList.add(receipt);
         return receipt;
     }
 
-    public void updateReceipt(Receipt receipt, TextInput receiptInput, List<TextInput> purInputs, byte[] img) {
+    /**
+     * Päivittää kuitin tiedot.
+     *
+     * @param receipt      Kuitti, eli Receipt-olio, jonka tiedot päivitetään
+     * @param receiptInput Syötetekstiolio, joka kuvaa kuittitietoja
+     * @param img          kuitin kuvadata tavutaulukkona
+     */
+    public void updateReceipt(Receipt receipt, TextInput receiptInput, byte[] img) {
         receipt.setFromMap(receiptInput.getAttrMap());
         receipt.setImage(img);
-        purchaseService.setNewPurchases(receipt.getId(), purInputs);
         receiptDao.update(receipt);
     }
 
+    /**
+     * Muodostaa uuden kuittikuvan järjestelmään, ja esikäsittelee sen jatkokäsittelyä ajatellen. Esikäsittelyssä kuva
+     * pyritään pakkaamaan pienemmäksi.
+     *
+     * @param file java.io.file -luokan olio, joka kuvaa kuvatiedoston sijaintia tiedostojärjestelmässä
+     * @return Tavutaulukko, jossa on kuvatiedoston kuvadata optimaalisesti pakattuna
+     * @throws Exception Heittää kaikki poikkeukset kutsujan (käyttöliittymä) käsiteltäväksi
+     */
     public byte[] prepareNewImage(File file) throws Exception {
         Source tinifyImg = Tinify.fromFile(file.getPath());
         return tinifyImg.toBuffer();

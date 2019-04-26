@@ -26,7 +26,7 @@ public class ReceiptTextInput implements TextInput {
     private BigDecimal sum;
     private String buyer;
 
-    public Set<String> validate() {
+    private Set<String> validate() {
         valid = true;
         hasChanged = false;
         invalidFields.clear();

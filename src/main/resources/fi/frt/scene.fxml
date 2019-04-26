@@ -78,7 +78,7 @@
                     <TableColumn fx:id="p_quantity" prefWidth="61.0" text="Määrä" />
                     <TableColumn fx:id="p_price" prefWidth="75.0" text="Hinta" />
                     <TableColumn fx:id="p_type" prefWidth="104.0" text="Tyyppi" />
-                    <!--<TableColumn prefWidth="238.0" text="Ehdotukset" />-->
+                    <TableColumn fx:id="p_suggestions" prefWidth="238.0" text="Ehdotukset" />
                 </columns>
                 <VBox.margin>
                     <Insets top="30.0" />
@@ -94,7 +94,7 @@
                             <String fx:id="fileChooserTitle" fx:value="Valitse kuvatiedosto" />
                             <String fx:id="allImagesText" fx:value="Kaikki kuvat" />
                             <String fx:id="imgAlertTitle" fx:value="Huomautus" />
-                            <String fx:id="imgAlert" fx:value="Kuvan lataaminen ei onnistunut!" />
+                            <String fx:id="imgAlert" fx:value="Kuvan käyttäminen ei onnistunut!" />
                         </Text>
                     </HBox>
                 </right>

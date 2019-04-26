@@ -12,4 +12,7 @@
 | 16.4. | 7    | Lisää toiminnallisuuksia |
 | 17.4. | 4    | Ostostaulukon totettaminen, JavaFX CellFactory |
 | 19.4. | 4    | Ostosrivien validointi, uusien ostosten lisääminen taulukkoon |
-| Yht   | 36   | 
+| 22.4. | 4    | Ostosten pysyväistalletus, kuvien lisääminen |
+| 23.4. | 5    | Kuvien zoomaus ja pysyväistalletus, testejen kirjoittamista |
+| 26.4. | 5    | Ostosehdotusten lisääminen, JavaDoc ja muu dokumentaatio|
+| Yht   | 50   | 

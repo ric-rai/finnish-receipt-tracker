@@ -2,6 +2,7 @@ package fi.frt;
 
 import fi.frt.ui.FXMLController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,6 +35,7 @@ public class MainApp extends Application {
     @Override
     public void stop() {
         springContext.close();
+        Platform.exit();
         System.exit(0);
     }
 

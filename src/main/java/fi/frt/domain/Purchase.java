@@ -45,15 +45,13 @@ public class Purchase {
         return type;
     }
 
+    /**
+     * Metodi palauttaa olion attribuuttien arvot Map-olioon määriteltyinä.
+     *
+     * @return Map - {"nameOfAttr1", valueOfAttr1}, {"nameOfAttr2", valueOfAttr2} ...
+     */
     public Map<String, Object> getAttrMap() {
-        return toStrMap(
-                "id", id,
-                "receiptId", receiptId,
-                "name", name,
-                "quantity", quantity,
-                "price", price,
-                "type", type
-        );
+        return toStrMap("id", id, "receiptId", receiptId, "name", name, "quantity", quantity, "price", price, "type", type);
     }
 
     public void setId(Long id) {
@@ -80,6 +78,13 @@ public class Purchase {
         this.type = type;
     }
 
+    /**
+     * Metodi asettaa olion attribuutit annetun Map-olion mukaisiin arvoihin. Map-oliossa tulee olla avain-arvo -pareina
+     * asetettavan olion attribuuttien nimet ja arvot. Metodia kutsuvan luokan ei siis välttämättä tarvitse tuntea
+     * oliota, kunhan kutsuvalla luokalla on käytössään sopiva attribuutit määrittelevä Map-olio.
+     *
+     * @param map Map-olio, johon on määritelty attribuuttien uusia arvoja
+     */
     public void setFromMap(Map<String, Object> map) {
         map.forEach((k, v) -> setProperty(this, k, v));
     }

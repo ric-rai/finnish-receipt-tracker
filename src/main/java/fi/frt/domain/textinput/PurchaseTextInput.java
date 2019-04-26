@@ -30,7 +30,7 @@ public class PurchaseTextInput implements TextInput {
         setFromMap(map);
     }
 
-    public Set<String> validate() {
+    private Set<String> validate() {
         valid = true;
         hasChanged = false;
         invalidFields.clear();

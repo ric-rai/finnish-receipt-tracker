@@ -12,6 +12,8 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 [Käyttöohje](./dokumentaatio/käyttöohje.md)
 
+[Releaset](https://github.com/ric-rai/finnish-receipt-tracker/releases)
+
 ## Komentorivitoiminnot
 
 ## Suorittaminen
