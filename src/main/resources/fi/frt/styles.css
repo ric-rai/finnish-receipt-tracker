@@ -6,6 +6,7 @@ Button {
 }
 
 #receiptContentBox {
+    -fx-min-width: 500;
     -fx-padding: 30 30 60 30;
 }
 
@@ -14,9 +15,14 @@ Button {
     -fx-font-size: 15px;
 }
 
+#receiptUpperContentBox {
+    -fx-spacing: 10;
+    -fx-padding: 0 0 30 0;
+}
+
 #receiptFieldBox {
     -fx-pref-width: 450;
-    -fx-padding: 30 0 20 0;
+    -fx-padding: 20 0 0 0;
     -fx-spacing: 15;
 }
 
@@ -45,8 +51,8 @@ Button {
     -fx-spacing: 10;
 }
 
-.invalid {
-    -fx-background-color: #ff9999;
+#receiptControlBox Button {
+    -fx-min-width: 90;
 }
 
 #p_suggestions .table-row-cell {
@@ -100,4 +106,8 @@ ZoomableImageView {
     -fx-padding: 10;
     -fx-spacing: 10;
     -fx-alignment: center;
+}
+
+.invalid {
+    -fx-background-color: #ff9999 !important;
 }

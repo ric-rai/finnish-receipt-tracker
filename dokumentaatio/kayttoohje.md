@@ -33,7 +33,7 @@ Voit lisätä kuitille kuvan "_Lisää kuva_" painikkella. Sovelluksen kuva-toim
 
 ## Sovelluksen konfigurointi
 
-Toimiakseen ohjelma vaatii jar-tiedoston kanssa samaan kansioon sijoitetun application.properties -konfiguraatiotiedoston.
+Konfiguraatiota varten ohjelma tarvitsee jar-tiedoston kanssa samaan kansioon sijoitetun application.properties -konfiguraatiotiedoston.
 
 ### Tietokannan konfigurointi
 Sovellus käyttää Spring Framework -ohjelmistokehystä erityisesti tietokantatoimintojen suorittamiseen. Application.properties -tiedostossa voit määritellä tietokanta-asetukset seuraavasti:

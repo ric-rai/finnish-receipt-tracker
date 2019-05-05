@@ -33,4 +33,4 @@ Järjestelmätestaus on suoritettu manuaalisesti.
 Sovellus on haettu ja sitä on testattu Linux-ympäristössä käyttöohjeessa näytetyllä konfiguraatiolla.
 
 ## Sovellukseen jääneet laatuongelmat
-Konfiguraation määrittelemien tiedostojen latauksessa ja käsittelyssä tapahtuvat virheilmoitukset voisivat olla vielä yksityiskohtaisempia. Olisi myös hyvä, jos käyttöliittymästä voisi avata lokin, josta näkee konfiguraatioon liittyvät ongelmat. Tällä hetkellä ne vain tulostetaan standardivirtaan.
+Konfiguraation määrittelemien tiedostojen latauksessa ja käsittelyssä tapahtuvat virheilmoitukset voisivat olla vielä yksityiskohtaisempia. Olisi myös hyvä, jos käyttöliittymästä voisi avata lokin, josta näkee konfiguraatioon liittyvät ongelmat. Tällä hetkellä ne tulostetaan standardivirtaan.

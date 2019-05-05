@@ -34,7 +34,7 @@
                 <Label text="Kuitti "/>
                 <Label fx:id="receiptId" text="0000000"/>
             </HBox>
-            <HBox>
+            <HBox id="receiptUpperContentBox">
                 <VBox id="receiptFieldBox">
                     <HBox>
                         <Label text="Päivämäärä" styleClass="receiptLabel"/>
@@ -94,10 +94,10 @@
 
         <!-- Purchase table -->
         <String fx:id="newPurchaseRow" fx:value="Lisää uusi..."/>
-        <String fx:id="p_nameD" fx:value="Ostos"/>
+        <String fx:id="p_nameD" fx:value=""/>
         <String fx:id="p_quantityD" fx:value="0"/>
         <String fx:id="p_priceD" fx:value="0.0"/>
-        <String fx:id="p_typeD" fx:value="Ostos"/>
+        <String fx:id="p_typeD" fx:value=""/>
 
         <!-- Image handling -->
         <String fx:id="fileChooserTitle" fx:value="Valitse kuvatiedosto"/>

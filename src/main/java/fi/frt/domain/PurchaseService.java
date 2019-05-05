@@ -80,7 +80,11 @@ public class PurchaseService {
                 .filter(TextInput::isValid)
                 .map(pi -> new Purchase(toStrMap(pi.getAttrMap(), "receiptId", receiptId)))
                 .collect(Collectors.toList());
-        purchases.forEach(p -> purchaseDao.create(p));
+        purchases.forEach(p -> {
+            purchaseDao.create(p);
+            nameTypeMap.putIfAbsent(p.getName(), new HashSet<>());
+            nameTypeMap.get(p.getName()).add(p.getType());
+        });
         allPurchases.put(receiptId, purchases);
     }
 

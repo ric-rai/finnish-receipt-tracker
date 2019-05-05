@@ -17,7 +17,7 @@ public interface TextInput {
     /**
      * Metodin tulee palauttaa merkkijonosetti, joka sisältää kaikkien epäkelpojen syötetekstikenttien nimet.
      *
-     * @return
+     * @return Epäkelpojen kenttien nimet
      */
     Set<String> getInvalidFields();
 

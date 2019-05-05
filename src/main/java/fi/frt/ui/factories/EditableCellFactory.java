@@ -48,7 +48,6 @@ public class EditableCellFactory implements Callback<TableColumn<TextInput, Stri
         @Override
         public void startEdit() {
             super.startEdit();
-            if (!initialized) init();
             textField.setText(getStrProperty(input, propertyName));
             setText(null);
             setGraphic(textField);
@@ -60,6 +59,7 @@ public class EditableCellFactory implements Callback<TableColumn<TextInput, Stri
         public void commitEdit(String item) {
             setProperty(input, propertyName, item);
             super.commitEdit(item);
+            getTableView().refresh();
         }
 
         @Override
@@ -79,9 +79,12 @@ public class EditableCellFactory implements Callback<TableColumn<TextInput, Stri
                     setGraphic(null);
                     setContentDisplay(ContentDisplay.TEXT_ONLY);
                 }
+                if (!initialized) init();
                 if (initialized) {
                     boolean invalid = input.getInvalidFields().contains(propertyName.replace("Str", ""));
-                    if (invalid) {
+                    int row = getTableRow().getIndex();
+                    int itemSize = getTableView().getItems().size();
+                    if (invalid && row != itemSize - 1 && !(row == itemSize - 2 && newText.isEmpty())) {
                         if (!this.invalid) {
                             getStyleClass().add("invalid");
                             this.invalid = true;
