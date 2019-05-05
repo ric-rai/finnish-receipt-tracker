@@ -8,9 +8,11 @@ Sovellus auttaa käyttäjää seuraamaan (suomalaisia) ostokuitteja, sekä pitä
 
 [Arkkitehtuurikuvaus](./dokumentaatio/arkkitehtuuri.md)
 
+[Testausdokumentti](./dokumentaatio/testaus.md)
+
 [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 
-[Käyttöohje](./dokumentaatio/käyttöohje.md)
+[Käyttöohje](./dokumentaatio/kayttoohje.md)
 
 [Releaset](https://github.com/ric-rai/finnish-receipt-tracker/releases)
 
