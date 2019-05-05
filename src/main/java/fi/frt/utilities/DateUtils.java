@@ -3,6 +3,9 @@ package fi.frt.utilities;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
+/**
+ * Luokkaan on määritelty vakiota käytettäväksi päivämäärien käsittelyyn.
+ */
 public final class DateUtils {
     /**
      * Pattern, jota käytetään sovelluksessa päivämäärien oikean muodon tarkistamiseen.

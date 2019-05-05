@@ -1,5 +1,9 @@
 package fi.frt;
 
+import fi.frt.dao.PurchaseDao;
+import fi.frt.dao.ReceiptDao;
+import fi.frt.domain.PurchaseService;
+import fi.frt.domain.ReceiptService;
 import fi.frt.ui.FXMLController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -10,8 +14,12 @@ import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Pääluokka, joka rakentaa käyttöliittymän ja luo sovelluksen Service- ja DAO-luokat, sekä tekee riippuvuusinjektiot.
+ */
 @SpringBootApplication
 public class MainApp extends Application {
     private ConfigurableApplicationContext springContext;
@@ -23,7 +31,12 @@ public class MainApp extends Application {
         fxmlLoader.setControllerFactory(springContext::getBean);
         Parent root = fxmlLoader.load();
         FXMLController fxmlController = fxmlLoader.getController();
-        fxmlController.init(stage, springContext.getBean("jdbcTemplate", JdbcTemplate.class));
+        Environment env = springContext.getBean("environment", Environment.class);
+        JdbcTemplate jdbcTemplate = springContext.getBean("jdbcTemplate", JdbcTemplate.class);
+        ReceiptService receiptSvc = new ReceiptService(new ReceiptDao(jdbcTemplate));
+        PurchaseService purchaseScv = new PurchaseService(new PurchaseDao(jdbcTemplate));
+        receiptSvc.setTinifyKey(env.getProperty("tinify-key"));
+        fxmlController.init(stage, receiptSvc, purchaseScv);
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());

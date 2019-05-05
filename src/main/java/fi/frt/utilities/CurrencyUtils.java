@@ -2,6 +2,9 @@ package fi.frt.utilities;
 
 import java.util.regex.Pattern;
 
+/**
+ * Luokkaan on määritelty vakiota käytettäväksi valuuttojen käsittelyyn.
+ */
 public final class CurrencyUtils {
     /**
      * Pattern, jota käytetään syötettyjen valuuttamäärien oikean muodon tarkistamiseen.

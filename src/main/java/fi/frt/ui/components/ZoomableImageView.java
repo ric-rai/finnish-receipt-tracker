@@ -156,7 +156,7 @@ public class ZoomableImageView extends VBox {
         Image image = new Image(new ByteArrayInputStream(imageArray));
         imageView.setImage(image);
         this.image = image;
-        reset(getWidth() / 2, getHeight() / 2);
+        reset(image.getWidth(), image.getHeight());
     }
 
     public byte[] getImage(){

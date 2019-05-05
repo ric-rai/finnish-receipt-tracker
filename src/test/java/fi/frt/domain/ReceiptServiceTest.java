@@ -7,13 +7,12 @@ import org.junit.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static fi.frt.utilities.DateUtils.DATE_FORMATTER;
 import static fi.frt.utilities.MappingUtils.toStrMap;
@@ -24,11 +23,15 @@ import static org.junit.Assert.assertThat;
 public class ReceiptServiceTest {
     private FakeReceiptDao fakeReceiptDao = new FakeReceiptDao();
     private List<Receipt> receiptList = new ArrayList<>();
-    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao, receiptList);
+    private ReceiptService receiptService = new ReceiptService(fakeReceiptDao);
     private LocalDate testDate = LocalDate.parse("01.02.2019", DATE_FORMATTER);
     private BigDecimal testSum = new BigDecimal("1.25");
     private TextInput fakeRcptTextInput;
     private byte[] testImage = new byte[]{};
+
+    public ReceiptServiceTest() {
+        receiptService.setReceiptList(receiptList);
+    }
 
     @Test
     public void newReceiptWorksCorrectly() {
@@ -44,7 +47,7 @@ public class ReceiptServiceTest {
     }
 
     @Test
-    public void updateReceiptWorksCorrectly(){
+    public void updateReceiptWorksCorrectly() {
         fakeRcptTextInput = new FakeReceiptTextInput(true, testDate, "Place", testSum, "Buyer");
         Receipt receipt = new Receipt();
         receiptService.updateReceipt(receipt, fakeRcptTextInput, testImage);
@@ -62,9 +65,10 @@ public class ReceiptServiceTest {
     }
 
     @Test
-    public void prepareNewImageIsWorkingCorrectly() {
+    public void prepareNewImageWorksCorrectly() {
         BufferedImage img = new BufferedImage(400, 700, BufferedImage.TYPE_INT_RGB);
         File file = new File("src/test/resources/_test_image.jpg");
+        receiptService.setTinifyKey((String) readPropertiesFile().get("tinify-key"));
         try {
             ImageIO.write(img, "JPEG", file);
         } catch (IOException e) {
@@ -78,6 +82,21 @@ public class ReceiptServiceTest {
         }
         assertThat(testArray.length, is(1991));
         file.delete();
+    }
+
+    private Properties readPropertiesFile() {
+        Properties props = new Properties();
+        try {
+            props.load(new FileInputStream(getResource("application.properties").getPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return props;
+    }
+
+    private URL getResource(String path) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        return classLoader.getResource(path);
     }
 
     class FakeReceiptDao implements Dao<Receipt, Long> {

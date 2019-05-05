@@ -83,8 +83,7 @@ public class Receipt {
 
     /**
      * Metodi asettaa olion attribuutit annetun Map-olion mukaisiin arvoihin. Map-oliossa tulee olla avain-arvo -pareina
-     * asetettavan olion attribuuttien nimet ja arvot. Metodia kutsuvan luokan ei siis välttämättä tarvitse tuntea
-     * oliota, kunhan kutsuvalla luokalla on käytössään sopiva attribuutit määrittelevä Map-olio.
+     * asetettavan olion attribuuttien nimet ja arvot.
      *
      * @param map Map-olio, johon on määritelty attribuuttien uusia arvoja
      */

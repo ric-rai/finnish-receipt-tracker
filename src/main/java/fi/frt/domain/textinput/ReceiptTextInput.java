@@ -139,11 +139,6 @@ public class ReceiptTextInput implements TextInput {
     }
 
     public Map<String, Object> getAttrMap() {
-        return MappingUtils.toStrMap(
-                "date", date,
-                "place", place,
-                "sum", sum,
-                "buyer", buyer
-        );
+        return MappingUtils.toStrMap("date", date, "place", place, "sum", sum, "buyer", buyer);
     }
 }

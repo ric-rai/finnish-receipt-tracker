@@ -17,13 +17,9 @@ public class ReceiptService {
      * Luo uuden ReceiptService -olion.
      *
      * @param rDao  Dao-rajapinnan toteuttava olio
-     * @param rList Lista, jossa pidetään kaikkien kuittien tietoja
      */
-    public ReceiptService(Dao<Receipt, Long> rDao, List<Receipt> rList) {
+    public ReceiptService(Dao<Receipt, Long> rDao) {
         this.receiptDao = rDao;
-        this.receiptList = rList;
-        this.receiptList.addAll(receiptDao.list());
-        Tinify.setKey("oSYQ7WOXulfGcEfPvHsF0mYvsrOlE3gB");
     }
 
     /**
@@ -57,7 +53,8 @@ public class ReceiptService {
 
     /**
      * Muodostaa uuden kuittikuvan järjestelmään, ja esikäsittelee sen jatkokäsittelyä ajatellen. Esikäsittelyssä kuva
-     * pyritään pakkaamaan pienemmäksi.
+     * pyritään pakkaamaan pienemmäksi. Käyttää sisäisesti Web API:a, joten vaatii internet-yhteyden. Heittää
+     * poikkeuksen, jos internet-yhteyttä ei ole käytössä, tai jos tiedoston lataamisessa tulee poikkeus.
      *
      * @param file java.io.file -luokan olio, joka kuvaa kuvatiedoston sijaintia tiedostojärjestelmässä
      * @return Tavutaulukko, jossa on kuvatiedoston kuvadata optimaalisesti pakattuna
@@ -68,4 +65,21 @@ public class ReceiptService {
         return tinifyImg.toBuffer();
     }
 
+    public void setReceiptList(List<Receipt> receiptList) {
+        this.receiptList = receiptList;
+        this.receiptList.addAll(receiptDao.list());
+    }
+
+    public void setTinifyKey(String tinifyKey) {
+        Tinify.setKey(tinifyKey);
+    }
+
+    /**
+     * Poistaa annetun kuitin järjestelmästä.
+     * @param receipt Poistettava kuitti
+     */
+    public void deleteReceipt(Receipt receipt) {
+        receiptDao.delete(receipt.getId());
+        receiptList.remove(receipt);
+    }
 }

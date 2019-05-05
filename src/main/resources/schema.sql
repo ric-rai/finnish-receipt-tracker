@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS Purchase
     price      DECIMAL  NOT NULL,
     type       VARCHAR(30),
     receipt_id BIGINT   NOT NULL,
-    FOREIGN KEY (receipt_id) REFERENCES receipt (id)
+    FOREIGN KEY (receipt_id) REFERENCES receipt (id) ON DELETE CASCADE
 );

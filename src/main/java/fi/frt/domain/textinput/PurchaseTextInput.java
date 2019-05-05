@@ -26,6 +26,12 @@ public class PurchaseTextInput implements TextInput {
     public PurchaseTextInput() {
     }
 
+    /**
+     * Asettaa syöteattribuutit annetusta Map-oliosta. Käyttää sisäisesti rajapinnan setFromMap-metodia.
+     *
+     * @param map Syötteet sisältävä Map
+     * @see TextInput#setFromMap(Map)
+     */
     public PurchaseTextInput(Map<String, Object> map) {
         setFromMap(map);
     }
@@ -134,6 +140,8 @@ public class PurchaseTextInput implements TextInput {
 
     public void setFromMap(Map<String, Object> map) {
         hasChanged = true;
+        map.remove("receiptId");
+        map.remove("id");
         map.forEach((k, v) -> setProperty(this, k + "Str", v.toString()));
     }
 

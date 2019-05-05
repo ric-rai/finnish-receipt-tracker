@@ -1,7 +1,5 @@
 package fi.frt.ui;
 
-import fi.frt.dao.PurchaseDao;
-import fi.frt.dao.ReceiptDao;
 import fi.frt.domain.Purchase;
 import fi.frt.domain.PurchaseService;
 import fi.frt.domain.Receipt;
@@ -26,7 +24,6 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -43,6 +40,9 @@ import static fi.frt.utilities.DateUtils.DATE_FORMATTER;
 import static fi.frt.utilities.MappingUtils.setProperty;
 import static fi.frt.utilities.MappingUtils.toStrMap;
 
+/**
+ * Käyttöliittymän kontrolleri
+ */
 @Component
 public class FXMLController {
 
@@ -86,11 +86,13 @@ public class FXMLController {
     private final ObservableList<TextInput> purInputList = FXCollections.observableArrayList(r -> new Observable[]{});
 
 
-    public void init(Stage stage, JdbcTemplate jdbcTemplate){
+    public void init(Stage stage, ReceiptService receiptService, PurchaseService purchaseService){
         this.stage = stage;
+        this.receiptService = receiptService;
+        receiptService.setReceiptList(receiptList);
+        this.purchaseService = purchaseService;
+        this.purchaseService.setActivePurchasesList(purchaseList);
         stage.setTitle(title);
-        purchaseService = new PurchaseService(new PurchaseDao(jdbcTemplate), purchaseList);
-        receiptService = new ReceiptService(new ReceiptDao(jdbcTemplate), receiptList);
         receiptFields = toStrMap("date", date, "sum", sum, "place", place, "buyer", buyer);
         purchaseColumns = toStrMap("name", p_name, "quantity", p_quantity, "price", p_price, "type", p_type);
         purchaseDefaults = toStrMap("name", p_nameD, "quantity", p_quantityD, "price", p_priceD, "type", p_typeD);
@@ -146,7 +148,7 @@ public class FXMLController {
     private void calculateSum() {
         BigDecimal s = purInputList.stream()
                 .filter(TextInput::isValid)
-                .map(inputData -> (PurchaseTextInput) inputData)
+                .map(textInput -> (PurchaseTextInput) textInput)
                 .map(pid -> pid.getPrice().multiply(new BigDecimal(pid.getQuantity())))
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -155,11 +157,17 @@ public class FXMLController {
 
     private void handlePurchaseCellEditStart(CellEditEvent<TextInput, String> cellEvent) {
         int row = cellEvent.getTablePosition().getRow();
-        if (row == purchaseInputTable.getItems().size() - 1) {
-            purInputList.get(row).setFromMap(purchaseDefaults);
-            purchaseInputTable.getItems().add(new PurchaseTextInput(toStrMap("name", newPurchaseRow)));
-            purchaseInputTable.refresh();
-        }
+        if (row == purchaseInputTable.getItems().size() - 1) insertNewPurchaseRow(row);
+    }
+
+    private void insertNewPurchaseRow(int row) {
+        purInputList.get(row).setFromMap(purchaseDefaults);
+        purchaseInputTable.getItems().add(new PurchaseTextInput(toStrMap("name", newPurchaseRow)));
+        purchaseInputTable.refresh();
+    }
+
+    public void handleNewPurchase(ActionEvent actionEvent) {
+        insertNewPurchaseRow(purchaseInputTable.getItems().size() - 1);
     }
 
     private void handleReceiptTableSelectionChange(Observable obs, Number old, Number newSelection) {
@@ -171,7 +179,8 @@ public class FXMLController {
         buyer.setText(selectedReceipt.getBuyer());
         receiptFields.values().forEach(field -> field.getStyleClass().remove("invalid"));
         setPurchaseInputList();
-        if (selectedReceipt.getImage() != null) {
+        byte[] img = selectedReceipt.getImage();
+        if (img != null && img.length != 0) {
             imageView.setZoomableImage(selectedReceipt.getImage());
         } else {
             imageView.setZoomableImage(new byte[]{});
@@ -242,6 +251,15 @@ public class FXMLController {
         alert.setHeaderText(null);
         alert.setContentText(imgAlert);
         alert.showAndWait();
+    }
+
+    public void handleDeleteReceipt(ActionEvent actionEvent) {
+        receiptService.deleteReceipt(receiptSelModel.getSelectedItem());
+        receiptTable.refresh();
+    }
+
+    public void handleClose(ActionEvent actionEvent) {
+        stage.close();
     }
 
 }

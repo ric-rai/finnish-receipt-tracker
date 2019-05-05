@@ -15,4 +15,7 @@
 | 22.4. | 4    | Ostosten pysyväistalletus, kuvien lisääminen |
 | 23.4. | 5    | Kuvien zoomaus ja pysyväistalletus, testejen kirjoittamista |
 | 26.4. | 5    | Ostosehdotusten lisääminen, JavaDoc ja muu dokumentaatio|
-| Yht   | 50   | 
+| 03.5. | 4    | Konfiguraatiotiedosto |
+| 04.5. | 6    | Tyyppiehdotukset konfiguraatiotiedostosta, testejä|
+| 05.5. | 6    | Loput dokumentaatiot ja viimeistely|
+| Yht   | 66   | 

@@ -1,9 +1,12 @@
-#receiptContent Label {
-    -fx-font-size: 13px;
+Button {
+    -fx-cursor: hand;
 }
 
-.invalid {
-    -fx-background-color: #ff9999;
+#receiptTable {
+}
+
+#receiptContentBox {
+    -fx-padding: 30 30 60 30;
 }
 
 #receiptTitle Label {
@@ -11,9 +14,48 @@
     -fx-font-size: 15px;
 }
 
-#receiptButtons {
+#receiptFieldBox {
+    -fx-pref-width: 450;
+    -fx-padding: 30 0 20 0;
+    -fx-spacing: 15;
+}
+
+#receiptFieldBox HBox{
+    -fx-alignment: CENTER_LEFT;
+}
+
+.receiptLabel {
+    -fx-pref-width: 150;
+}
+
+#sumBox {
+    -fx-padding: 5 0 0 0;
+}
+
+#sumField {
+    -fx-font-weight: bold;
+}
+
+#receiptControlBox {
+    -fx-padding: 35 0 0 0;
     -fx-spacing: 10;
-    -fx-alignment: CENTER;
+}
+
+#receiptControlBox HBox {
+    -fx-spacing: 10;
+}
+
+.invalid {
+    -fx-background-color: #ff9999;
+}
+
+#p_suggestions .table-row-cell {
+    -fx-padding: 0;
+}
+
+#purchaseInputTable Button {
+    -fx-font-size: 11px;
+    -fx-padding: 2 5 2 5;
 }
 
 #purchaseInputTable .table-row-cell:filled:selected {
@@ -50,14 +92,8 @@
     -fx-padding: 0, 0, 0, 0;
 }
 
-#sumBox {
-    -fx-padding: 10;
-    -fx-font-weight: bold;
-    -fx-font-size: 15px;
-}
-
-#sum {
-    -fx-background-color: #f4f4f4;
+ZoomableImageView {
+    -fx-background-color: white;
 }
 
 #imgButtons {

@@ -39,7 +39,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void createIsWorkingCorrectly() {
+    public void createWorksCorrectly() {
         Receipt in = new Receipt();
         in.setDate(testDate);
         in.setPlace("Place");
@@ -59,7 +59,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void getIsWorkingCorrectly() {
+    public void getWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO receipt (date, place, sum, buyer, image)" +
                         " VALUES ( ?, 'Place', ?, 'Buyer', X'01FF' )",
@@ -74,7 +74,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void getByValueIsWorkingCorrectly() {
+    public void getByValueWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO receipt (date, place, sum, buyer, image)" +
                         " VALUES ( ?, 'test', ?, 'Buyer', X'01FF' )",
@@ -91,7 +91,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void updateIsWorkingCorrectly() {
+    public void updateWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO receipt (date, place, sum, buyer, image)" +
                         " VALUES ( ?, 'Place', ?, 'Buyer', X'01FF' )",
@@ -122,7 +122,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void deleteIsWorkingCorrectly() {
+    public void deleteWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO receipt (date, place, sum, buyer, image)" +
                         " VALUES ( ?, 'Place', ?, 'Buyer', X'01FF' )",
@@ -137,7 +137,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void deleteByValueIsWorkingCorrectly() {
+    public void deleteByValueWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO receipt (date, place, sum, buyer, image)" +
                         " VALUES ( ?, 'test', ?, 'Buyer', X'01FF' )",
@@ -152,7 +152,7 @@ public class ReceiptDaoTest {
     }
 
     @Test
-    public void listIsWorkingCorrectly() {
+    public void listWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO receipt (date, place, sum, buyer) VALUES" +
                         " ( '2019-01-01', 'Place', 1, 'Buyer' )," +

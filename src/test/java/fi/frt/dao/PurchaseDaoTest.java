@@ -37,7 +37,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void createIsWorkingCorrectly() {
+    public void createWorksCorrectly() {
         Purchase in = new Purchase();
         in.setName(testName);
         in.setQuantity(testQuantity);
@@ -55,7 +55,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void getIsWorkingCorrectly() {
+    public void getWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO Purchase (name, quantity, price, type) VALUES ( ?, ?, ?, ? )",
                 testName, testQuantity, testPrice, testType
@@ -68,7 +68,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void getByValueIsWorkingCorrectly() {
+    public void getByValueWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO Purchase (name, quantity, price, type) VALUES ( ?, ?, ?, ? )",
                 testName, testQuantity, testPrice, testType
@@ -83,7 +83,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void updateIsWorkingCorrectly() {
+    public void updateWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO Purchase (name, quantity, price, type) VALUES ( ?, ?, ?, ? )",
                 "Old Name", 0, 0, "Old Type"
@@ -106,7 +106,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void deleteIsWorkingCorrectly() {
+    public void deleteWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO Purchase (name, quantity, price, type) VALUES ( ?, ?, ?, ? )",
                 testName, testQuantity, testPrice, testType
@@ -120,7 +120,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void deleteByValueIsWorkingCorrectly() {
+    public void deleteByValueWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO Purchase (name, quantity, price, type) VALUES ( ?, ?, ?, ? )",
                 testName, testQuantity, testPrice, testType
@@ -134,7 +134,7 @@ public class PurchaseDaoTest {
     }
 
     @Test
-    public void listIsWorkingCorrectly() {
+    public void listWorksCorrectly() {
         jdbcTemplate.update(
                 "INSERT INTO Purchase (name, quantity, price, type) VALUES" +
                         " ( 'Name', 1, 0, 'Type' )," +

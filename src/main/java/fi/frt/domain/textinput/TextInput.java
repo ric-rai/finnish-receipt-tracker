@@ -3,6 +3,9 @@ package fi.frt.domain.textinput;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Rajapinnan toteuttavat luokat kuvaavat johonkin datamalliin liittyviä tekstisyötteitä.
+ */
 public interface TextInput {
     /**
      * Metodin tulee palauttaa true, jos kaikki rajapinnan toteuttavalle oliolle annetut syötetekstit ovat valideja.

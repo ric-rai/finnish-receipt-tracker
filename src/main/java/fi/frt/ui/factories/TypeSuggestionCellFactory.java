@@ -10,7 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 
 public class TypeSuggestionCellFactory implements Callback<TableColumn<TextInput, Void>, TableCell<TextInput, Void>> {
     private PurchaseService purchaseService;
@@ -61,11 +62,12 @@ public class TypeSuggestionCellFactory implements Callback<TableColumn<TextInput
             } else {
                 if (!initialized) init();
                 if (initialized && getTableRow().getIndex() != getTableView().getItems().size() - 1) {
-                    List<String> suggs = purchaseService.getTypeSuggestions(input.getNameStr());
+                    Set<String> suggs = purchaseService.getTypeSuggestions(input.getNameStr());
+                    Iterator<String> iter = suggs.iterator();
                     int size = suggs.size();
                     for (int i = 0; i < 3; i++) {
                         if (size > i) {
-                            buttons.get(i).setText(suggs.get(i));
+                            buttons.get(i).setText(iter.next());
                             buttons.get(i).setVisible(true);
                         } else {
                             buttons.get(i).setVisible(false);
