@@ -17,5 +17,5 @@
 | 26.4. | 5    | Ostosehdotusten lisääminen, JavaDoc ja muu dokumentaatio|
 | 03.5. | 4    | Konfiguraatiotiedosto |
 | 04.5. | 6    | Tyyppiehdotukset konfiguraatiotiedostosta, testejä|
-| 05.5. | 6    | Loput dokumentaatiot ja viimeistely|
-| Yht   | 66   | 
+| 05.5. | 9    | Loput dokumentaatiot ja viimeistely|
+| Yht   | 69   | 
